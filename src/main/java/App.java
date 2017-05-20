@@ -15,9 +15,6 @@ import service.impl.DefaultUserService;
 
 import java.io.IOException;
 
-/**
- * Created by raulp on 5/20/2017.
- */
 public class App extends Application {
     private UserRepository userRepository = new DefaultUserRepository();
 
@@ -30,8 +27,6 @@ public class App extends Application {
     private AuthenticationController authenticationController;
 
     public static void main(String[] args) {
-
-
         launch(args);
     }
 
