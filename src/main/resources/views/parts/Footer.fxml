@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<GridPane styleClass="topWrapper" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+    <padding><Insets left="5" right="5"/></padding>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50.0"  />
+    </columnConstraints>
+    <Label text="Createasfas" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50.0"  />
+    </columnConstraints>
+    <Label text="Version 0.0.1" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+</GridPane>
