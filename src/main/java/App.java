@@ -59,5 +59,4 @@ public class App extends Application {
         //Then set services to controllers
         setServicesToControllers();
     }
-    //just a test
 }
