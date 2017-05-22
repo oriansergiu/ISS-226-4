@@ -1,21 +1,28 @@
 package controller.impl;
 
 import controller.AuthenticationController;
+import controller.Controller;
 import enums.UserRole;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.User;
-import service.ConferenceSessionService;
-import service.UserService;
+import service.*;
 import util.AlertUtil;
 import util.UserUtil;
 import validator.exceptions.UserException;
 
-public class DefaultAuthenticationController implements AuthenticationController {
+import java.io.IOException;
+
+public class DefaultAuthenticationController implements AuthenticationController, Controller {
     private UserService userService;
+    private AuthorService authorService;
 
     private ConferenceSessionService conferenceSessionService;
 
@@ -71,7 +78,8 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     public void handleLogin() {
         try {
-            userService.loginUser(textFieldLoginEmail.getText(), textFieldLoginPassword.getText());
+            User user = userService.loginUser(textFieldLoginEmail.getText(), textFieldLoginPassword.getText());
+            loadMainWindow(user);
         } catch (UserException e) {
             AlertUtil.showAlertMessage(Alert.AlertType.WARNING, e.getMessage());
         }
@@ -118,15 +126,61 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     public void loadMainWindow(User user) {
         switch (user.getUserRole()) {
-
+            case (2):
+            {
+                openWindow("Reviewer");
+            }
+            case (3):
+            {
+                openWindow("Staff");
+            }
         }
+    }
+
+    private void openWindow(String userView) {
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(DefaultAuthenticationController.class.getResource("/views/components/"+userView+"Window.fxml"));
+        BorderPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Controller controller = loader.getController();
+        Scene scene = new Scene(pane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        Stage stage = (Stage) radioButtonRegisterUserRoleAuthor.getScene().getWindow();
+        stage.close();
+
     }
 
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    @Override
+    public void setAuthorService(AuthorService authorService) {
+
+    }
+
     public void setConferenceSessionService(ConferenceSessionService conferenceSessionService) {
         this.conferenceSessionService = conferenceSessionService;
+    }
+
+    @Override
+    public void setReviewerService(ReviewerService reviewerService) {
+
+    }
+
+    @Override
+    public void setSectionService(SectionService sectionService) {
+
+    }
+
+    @Override
+    public void setPaperService(PaperService paperService) {
+
     }
 }

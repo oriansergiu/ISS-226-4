@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" prefWidth="800" prefHeight="600"
+>
+    <top>
+        <fx:include source="../parts/Header.fxml"></fx:include>
+    </top>
+    <left>
+
+    </left>
+    <center>
+
+    </center>
+    <bottom>
+        <fx:include source="../parts/Footer.fxml"></fx:include>
+    </bottom>
+</BorderPane>

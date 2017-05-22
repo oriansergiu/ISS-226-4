@@ -4,24 +4,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import repository.AbstractRepository;
 import repository.ConferenceSessionRepository;
 import repository.UserRepository;
+import repository.impl.DefaultAbstractRepository;
 import repository.impl.DefaultConferenceSessionRepository;
 import repository.impl.DefaultUserRepository;
+import service.AbstractService;
 import service.ConferenceSessionService;
 import service.UserService;
+import service.impl.DefaultAbstractService;
 import service.impl.DefaultConferenceSessionService;
 import service.impl.DefaultUserService;
 
 import java.io.IOException;
 
 public class App extends Application {
-    private UserRepository userRepository = new DefaultUserRepository();
+    private AbstractRepository abstractRepository = new DefaultAbstractRepository();
+    private AbstractService abstractService = new DefaultAbstractService();
 
+    private UserRepository userRepository = new DefaultUserRepository();
     private UserService userService = new DefaultUserService();
 
     private ConferenceSessionRepository conferenceSessionRepository = new DefaultConferenceSessionRepository();
-
     private ConferenceSessionService conferenceSessionService = new DefaultConferenceSessionService();
 
     private AuthenticationController authenticationController;
@@ -50,6 +55,7 @@ public class App extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
+
         //Firstly load the controllers from the fxml files
         loadAuthenticationView(primaryStage);
 

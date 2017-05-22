@@ -1,5 +1,5 @@
 package enums;
 
 public enum UserRole {
-    LISTENER, AUTHOR, REVIEWER, STAFF
+    LISTENER, AUTHOR, REVIEWER, STAFF, PC
 }
