@@ -2,9 +2,12 @@ package controller.impl;
 
 import controller.AuthorWindowController;
 import controller.Controller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import model.Abstract;
 import model.Author;
@@ -14,6 +17,7 @@ import service.*;
 
 import javax.swing.text.html.ListView;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,11 +31,7 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     private SectionService sectionService;
     private ConferenceSessionService conferenceSessionService;
     private User user;
-    @FXML
-    public ListView proposedPapersList;
-
-    @FXML
-    public ListView acceptedPapersList;
+    private Author author;
 
     @FXML
     public Button showAddPaperBtn;
@@ -59,12 +59,24 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @FXML
     public AnchorPane centerPane;
 
+    @FXML
+    public TableView<Paper> proposedPapersTableView;
+    @FXML
+    public TableColumn<Paper,String> proposedColumn;
+    @FXML
+    public TableView<Paper> acceptedPapersTableView;
+    @FXML
+    public TableColumn<Paper,String> acceptedColumn;
+
+
     public DefaultAuthorWindowController() {
     }
 
     @FXML
     public void initialize()
     {
+        proposedColumn.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
+        acceptedColumn.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
     }
 
 
@@ -107,6 +119,19 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @Override
     public void setCurrentUser(User user) {
         this.user = user;
+
+        this.author = authorService.getAuthorByUserId(user);
+
+        if(author != null){
+            List<Paper> proposedPapers = new ArrayList<>(author.getProposedPapers());
+            ObservableList<Paper> observableList = FXCollections.observableList(proposedPapers);
+            proposedPapersTableView.setItems(observableList);
+
+            List<Paper> acceptedPapers = new ArrayList<>(author.getAcceptedPapers());
+            ObservableList<Paper> observableList2 = FXCollections.observableList(acceptedPapers);
+            acceptedPapersTableView.setItems(observableList2);
+        }
+
     }
 
     @FXML
@@ -121,15 +146,15 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         _abstract.setText(_abstractText);
 
         //Author thisAuthor = ;
-        Author thisAuthor = authorService.getAuthorByUserId(user);
-        if(thisAuthor == null){
-            thisAuthor = new Author();
-            thisAuthor.setUser(user);
-            authorService.addAuthor(thisAuthor);
+        //Author thisAuthor = authorService.getAuthorByUserId(user);
+        if(author == null){
+            author = new Author();
+            author.setUser(user);
+            authorService.addAuthor(author);
         }
 
         Paper paper = new Paper();
-        paper.setAuthor(thisAuthor);
+        paper.setAuthor(author);
         paper.setCoAuthors(coAuthors);
         paper.setKeywords(keywords);
         paper.setTitle(title);
@@ -145,10 +170,10 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         abstractService.updateAbstract(_abstractObj);
         paperService.updatePaper(paper);
 
-        List<Paper> proposedPapers = thisAuthor.getProposedPapers();
+        List<Paper> proposedPapers = author.getProposedPapers();
         proposedPapers.add(paper);
-        thisAuthor.setProposedPapers(proposedPapers);
-        authorService.updateAuthor(thisAuthor);
+        author.setProposedPapers(proposedPapers);
+        authorService.updateAuthor(author);
     }
 
     @FXML
