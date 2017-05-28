@@ -9,9 +9,7 @@ import service.*;
 
 import javax.swing.text.html.ListView;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+
 public class DefaultStaffWindowController implements StaffWindowController, Controller {
 
     private UserService userService;

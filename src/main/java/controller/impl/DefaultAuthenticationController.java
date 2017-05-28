@@ -23,6 +23,7 @@ import java.io.IOException;
 public class DefaultAuthenticationController implements AuthenticationController, Controller {
     private UserService userService;
     private AuthorService authorService;
+    private PaperService paperService;
 
     private ConferenceSessionService conferenceSessionService;
 
@@ -126,14 +127,22 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     public void loadMainWindow(User user) {
         switch (user.getUserRole()) {
+            case (1):
+            {
+                openWindow("Author");
+                break;
+            }
             case (2):
             {
                 openWindow("Reviewer");
+                break;
             }
             case (3):
             {
                 openWindow("Staff");
+                break;
             }
+
         }
     }
 
@@ -147,6 +156,7 @@ public class DefaultAuthenticationController implements AuthenticationController
             e.printStackTrace();
         }
         Controller controller = loader.getController();
+        setControllerServices(controller);
         Scene scene = new Scene(pane);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -162,7 +172,7 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     @Override
     public void setAuthorService(AuthorService authorService) {
-
+        this.authorService = authorService;
     }
 
     public void setConferenceSessionService(ConferenceSessionService conferenceSessionService) {
@@ -181,6 +191,11 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     @Override
     public void setPaperService(PaperService paperService) {
+        this.paperService = paperService;
+    }
 
+    public void setControllerServices(Controller controller){
+        controller.setAuthorService(authorService);
+        controller.setPaperService(paperService);
     }
 }
