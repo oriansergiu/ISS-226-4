@@ -1,9 +1,26 @@
 package service.impl;
 
+import model.Abstract;
+import repository.AbstractRepository;
 import service.AbstractService;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+
+
 public class DefaultAbstractService implements AbstractService{
+    private AbstractRepository abstractRepository;
+
+    @Override
+    public void setAbstractRepository(AbstractRepository abstractRepository) {
+        this.abstractRepository = abstractRepository;
+    }
+
+    @Override
+    public void addAbstract(Abstract _abstract) {
+        abstractRepository.save(_abstract);
+    }
+
+    @Override
+    public void updateAbstract(Abstract _abstract) {
+        abstractRepository.update(_abstract);
+    }
 }

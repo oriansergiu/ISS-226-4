@@ -22,7 +22,6 @@ public class App extends Application {
     private PaperRepository paperRepository = new DefaultPaperRepository();
     private PaperService paperService = new DefaultPaperService();
 
-
     private AuthorRepository authorRepository = new DefaultAuthorRepository();
     private AuthorService authorService = new DefaultAuthorService();
 
@@ -40,6 +39,7 @@ public class App extends Application {
         conferenceSessionService.setConferenceSessionRepository(conferenceSessionRepository);
         paperService.setPaperRepository(paperRepository);
         authorService.setAuthorRepository(authorRepository);
+        abstractService.setAbstractRepository(abstractRepository);
     }
 
     private void setServicesToControllers() {
@@ -47,6 +47,7 @@ public class App extends Application {
         authenticationController.setConferenceSessionService(conferenceSessionService);
         authenticationController.setAuthorService(authorService);
         authenticationController.setPaperService(paperService);
+        authenticationController.setAbstractService(abstractService);
     }
 
     private void loadAuthenticationView(Stage primaryStage) throws IOException {

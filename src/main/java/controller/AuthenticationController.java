@@ -1,9 +1,6 @@
 package controller;
 
-import service.AuthorService;
-import service.ConferenceSessionService;
-import service.PaperService;
-import service.UserService;
+import service.*;
 
 public interface AuthenticationController {
     void handleLogin();
@@ -12,4 +9,5 @@ public interface AuthenticationController {
     void setConferenceSessionService(ConferenceSessionService conferenceSessionService);
     void setAuthorService(AuthorService authorService);
     void setPaperService(PaperService paperService);
+    void setAbstractService(AbstractService abstractService);
 }

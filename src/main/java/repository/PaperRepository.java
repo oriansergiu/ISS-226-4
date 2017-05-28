@@ -1,7 +1,11 @@
 package repository;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+import model.Paper;
+import java.util.List;
+
 public interface PaperRepository {
+    void save(Paper paper);
+    void update(Paper paper);
+    Paper getPaperById(Integer id);
+    List<Paper> getAll();
 }

@@ -1,7 +1,10 @@
 package service;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+import model.Abstract;
+import repository.AbstractRepository;
+
 public interface AbstractService {
+    void setAbstractRepository(AbstractRepository abstractRepository);
+    void addAbstract(Abstract _abstract);
+    void updateAbstract(Abstract _abstract);
 }

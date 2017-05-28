@@ -1,10 +1,8 @@
 package controller;
 
+import model.User;
 import service.*;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
 public interface Controller {
     void setUserService(UserService userService);
     void setAuthorService(AuthorService authorService);
@@ -12,4 +10,6 @@ public interface Controller {
     void setReviewerService(ReviewerService reviewerService);
     void setSectionService(SectionService sectionService);
     void setPaperService(PaperService paperService);
+    void setAbstractService(AbstractService abstractService);
+    void setCurrentUser(User user);
 }

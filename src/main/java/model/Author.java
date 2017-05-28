@@ -1,5 +1,8 @@
 package model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,13 +13,33 @@ public class Author {
     @GeneratedValue
     private Integer id;
 
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL },fetch = FetchType.EAGER)
     @JoinTable(name = "proposed_papers")
     private List<Paper> proposedPapers;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "accepted_papers")
     private List<Paper> acceptedPapers;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne
+    private User user;
+
+    public Author(User user){
+        this.user = user;
+    }
+
+    public Author(){
+        this.user = null;
+    }
 
     public Integer getId() {
         return id;

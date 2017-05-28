@@ -1,11 +1,10 @@
 package service;
 
+import model.Paper;
 import repository.PaperRepository;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
 public interface PaperService {
     void setPaperRepository(PaperRepository paperRepository);
-
+    void addPaper(Paper paper);
+    void updatePaper(Paper paper);
 }

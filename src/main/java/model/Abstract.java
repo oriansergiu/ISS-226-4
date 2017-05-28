@@ -11,6 +11,14 @@ public class Abstract {
 
     private String text;
 
+    public Paper getPaper() {
+        return paper;
+    }
+
+    public void setPaper(Paper paper) {
+        this.paper = paper;
+    }
+
     @OneToOne
     private Paper paper;
 
@@ -29,4 +37,6 @@ public class Abstract {
     public void setText(String text) {
         this.text = text;
     }
+
+
 }

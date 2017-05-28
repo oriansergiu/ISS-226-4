@@ -24,6 +24,7 @@ public class DefaultAuthenticationController implements AuthenticationController
     private UserService userService;
     private AuthorService authorService;
     private PaperService paperService;
+    private AbstractService abstractService;
 
     private ConferenceSessionService conferenceSessionService;
 
@@ -129,24 +130,24 @@ public class DefaultAuthenticationController implements AuthenticationController
         switch (user.getUserRole()) {
             case (1):
             {
-                openWindow("Author");
+                openWindow("Author",user);
                 break;
             }
             case (2):
             {
-                openWindow("Reviewer");
+                openWindow("Reviewer",user);
                 break;
             }
             case (3):
             {
-                openWindow("Staff");
+                openWindow("Staff",user);
                 break;
             }
 
         }
     }
 
-    private void openWindow(String userView) {
+    private void openWindow(String userView,User user) {
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(DefaultAuthenticationController.class.getResource("/views/components/"+userView+"Window.fxml"));
         BorderPane pane = null;
@@ -157,6 +158,7 @@ public class DefaultAuthenticationController implements AuthenticationController
         }
         Controller controller = loader.getController();
         setControllerServices(controller);
+        setControllerCurrentUser(controller,user);
         Scene scene = new Scene(pane);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -194,8 +196,23 @@ public class DefaultAuthenticationController implements AuthenticationController
         this.paperService = paperService;
     }
 
+    @Override
+    public void setAbstractService(AbstractService abstractService) {
+        this.abstractService = abstractService;
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+
+    }
+
     public void setControllerServices(Controller controller){
         controller.setAuthorService(authorService);
         controller.setPaperService(paperService);
+        controller.setAbstractService(abstractService);
+    }
+
+    public void setControllerCurrentUser(Controller controller,User user){
+        controller.setCurrentUser(user);
     }
 }
