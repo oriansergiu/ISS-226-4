@@ -17,7 +17,7 @@ public class Paper {
     private String keywords;
 
     private String topic;
-
+    @Lob
     private Byte[] attachment;
 
     @OneToOne

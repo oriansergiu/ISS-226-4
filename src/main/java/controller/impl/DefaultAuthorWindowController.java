@@ -11,17 +11,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import model.Abstract;
 import model.Author;
 import model.Paper;
 import model.User;
 import service.*;
 
-import javax.swing.text.html.ListView;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class DefaultAuthorWindowController implements AuthorWindowController, Controller {
 
@@ -60,7 +63,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     public TextArea abstractTA;
     @FXML
     public AnchorPane centerPane;
-
+    @FXML
+    public TextField filePathTF;
     @FXML
     public TableView<Paper> proposedPapersTableView;
     @FXML
@@ -143,9 +147,19 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         String keywords = this.KeywordsTF.getText();
         String topic = this.TopicsTF.getText();
         String _abstractText = this.abstractTA.getText();
-
+        byte[] attachment = null;
         Abstract _abstract = new Abstract();
         _abstract.setText(_abstractText);
+
+
+        if(!filePathTF.getText().equals("")){
+            Path path = Paths.get(filePathTF.getText());
+            try {
+                attachment =  Files.readAllBytes(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         //Author thisAuthor = ;
         //Author thisAuthor = authorService.getAuthorByUserId(user);
@@ -155,13 +169,18 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
             authorService.addAuthor(author);
         }
 
+        Byte[] byteObjects = new Byte[attachment.length];
+        int i=0;
+        for(byte b: attachment)
+            byteObjects[i++] = b;  // Autoboxing.
+
         Paper paper = new Paper();
         paper.setAuthor(author);
         paper.setCoAuthors(coAuthors);
         paper.setKeywords(keywords);
         paper.setTitle(title);
         paper.setTopic(topic);
-
+        paper.setAttachment(byteObjects);
         Abstract _abstractObj = new Abstract();
         _abstractObj.setText(_abstractText);
 
@@ -173,6 +192,9 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         paperService.updatePaper(paper);
 
         List<Paper> proposedPapers = author.getProposedPapers();
+        if(proposedPapers == null){
+            proposedPapers = new ArrayList<>();
+        }
         proposedPapers.add(paper);
         author.setProposedPapers(proposedPapers);
         authorService.updateAuthor(author);
@@ -224,6 +246,23 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    public void handleUploadPaper(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("WORD files (*.doc)", "*.doc"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("WORD files (*.docx)", "*.docx"));
+
+        File file = fileChooser.showOpenDialog(null);
+        if(file == null){
+        }
+        else{
+            filePathTF.setText(file.getAbsolutePath());
+        }
     }
 
     public void setModifyView(Paper paper){
