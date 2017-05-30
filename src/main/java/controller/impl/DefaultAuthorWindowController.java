@@ -4,6 +4,8 @@ import controller.AuthorWindowController;
 import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -204,5 +206,49 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         controller.setAuthorService(authorService);
         controller.setPaperService(paperService);
     }
+
+    @FXML
+    public void handleSelectionChanged(){
+        Paper paper = proposedPapersTableView.getSelectionModel().getSelectedItem();
+        System.out.println(paper);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
+        AnchorPane pane = null;
+        try {
+            fxmlLoader.setController(this);
+            pane = fxmlLoader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(pane);
+            setModifyView(paper);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setModifyView(Paper paper){
+        TitleTF.setText(paper.getTitle());
+        KeywordsTF.setText(paper.getKeywords());
+        TopicsTF.setText(paper.getTopic());
+        coAuthorsTF.setText(paper.getCoAuthors());
+        abstractTA.setText(paper.getPaperAbstract().getText());
+        TitleTF.setEditable(false);
+        KeywordsTF.setEditable(false);
+        TopicsTF.setEditable(false);
+        coAuthorsTF.setEditable(false);
+        addPaperBtn.setText("Modify paper");
+        addPaperBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                handleModifyPaper(paper);
+            }
+        });
+    }
+
+    private void handleModifyPaper(Paper paper) {
+        Abstract _abstract = paper.getPaperAbstract();
+        _abstract.setText(abstractTA.getText());
+        abstractService.updateAbstract(_abstract);
+    }
+
 
 }

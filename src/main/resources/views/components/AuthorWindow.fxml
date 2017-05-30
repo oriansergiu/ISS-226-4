@@ -24,7 +24,7 @@
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
                            <Button fx:id="showAddPaperBtn" layoutX="51.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleShowAddPaperBtn" text="Adauga Lucrare" />
-                           <TableView fx:id="proposedPapersTableView" layoutX="9.0" layoutY="27.0" prefHeight="152.0" prefWidth="183.0">
+                           <TableView fx:id="proposedPapersTableView" layoutX="9.0" layoutY="27.0" onMouseClicked="#handleSelectionChanged" prefHeight="152.0" prefWidth="183.0">
                              <columns>
                                <TableColumn fx:id="proposedColumn" prefWidth="182.0" text="Lucrari propuse" />
                              </columns>
