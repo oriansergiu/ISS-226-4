@@ -286,6 +286,22 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     private void handleModifyPaper(Paper paper) {
         Abstract _abstract = paper.getPaperAbstract();
         _abstract.setText(abstractTA.getText());
+        byte[] attachment = null;
+        if(!filePathTF.getText().equals("")){
+            Path path = Paths.get(filePathTF.getText());
+            try {
+                attachment =  Files.readAllBytes(path);
+                Byte[] byteObjects = new Byte[attachment.length];
+                int i=0;
+                for(byte b: attachment)
+                    byteObjects[i++] = b;  // Autoboxing.
+                paper.setAttachment(byteObjects);
+
+                paperService.updatePaper(paper);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         abstractService.updateAbstract(_abstract);
     }
 
