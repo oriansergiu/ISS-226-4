@@ -5,6 +5,7 @@ import repository.ConferenceSessionRepository;
 import service.ConferenceSessionService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public class DefaultConferenceSessionService implements ConferenceSessionService {
     private ConferenceSessionRepository conferenceSessionRepository;
@@ -14,8 +15,17 @@ public class DefaultConferenceSessionService implements ConferenceSessionService
         return conferenceSessionRepository.findById(id);
     }
 
+    @Override
+    public List<ConferenceSession> getAll(){return conferenceSessionRepository.getAll();}
+
     @Transactional
     public void setConferenceSessionRepository(ConferenceSessionRepository conferenceSessionRepository) {
         this.conferenceSessionRepository = conferenceSessionRepository;
     }
+
+    @Override
+    public void updateConferenceSession(ConferenceSession conferenceSession) {
+        conferenceSessionRepository.update(conferenceSession);
+    }
+
 }

@@ -3,14 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="700" prefWidth="1000" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.impl.DefaultStaffWindowController">
+<BorderPane prefHeight="700" prefWidth="1000" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultStaffWindowController">
     <top>
         <fx:include source="../parts/Header.fxml" />
     </top>
@@ -18,9 +18,17 @@
         <AnchorPane>
          <Accordion>
            <panes>
-             <TitledPane animated="false" text="untitled 1">
+             <TitledPane animated="false" text="Conference Sessions">
                <content>
-                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                   <children>
+                       <TableView fx:id="sessionTableView" layoutX="9.0" layoutY="27.0" onMouseClicked="#handleSelectionChanged" prefHeight="152.0" prefWidth="183.0">
+                           <columns>
+                               <TableColumn fx:id="sessionsColumn" prefWidth="182.0" text="startDate" />
+                           </columns>
+                       </TableView>
+                   </children>
+                 </AnchorPane>
                </content>
              </TitledPane>
              <TitledPane animated="false" text="untitled 2">
@@ -38,10 +46,7 @@
         </AnchorPane>
     </left>
     <center>
-        <AnchorPane>
-            <TableView fx:id="tableViewConferenceComponentsWithInformations" prefHeight="400.0" prefWidth="344.0">
-
-            </TableView>
+        <AnchorPane fx:id="centerPane">
          <BorderPane.margin>
             <Insets left="10.0" />
          </BorderPane.margin>

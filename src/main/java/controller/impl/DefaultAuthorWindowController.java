@@ -8,10 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Abstract;
 import model.Author;
 import model.Paper;
@@ -37,12 +41,18 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     private ConferenceSessionService conferenceSessionService;
     private User user;
     private Author author;
+    private DefaultAuthenticationController autentificationController;
+
 
     @FXML
     public Button showAddPaperBtn;
 
     @FXML
     public TitledPane proposedPapersTP;
+
+    @FXML
+        public Button LogoutButton;
+
 
     @FXML
     public Button uploadPaperBtn;
@@ -305,5 +315,7 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         abstractService.updateAbstract(_abstract);
     }
 
+    public void logoutHandle() {
 
+    }
 }

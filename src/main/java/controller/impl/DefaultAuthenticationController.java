@@ -6,10 +6,7 @@ import enums.UserRole;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.User;
@@ -18,6 +15,7 @@ import util.AlertUtil;
 import util.UserUtil;
 import validator.exceptions.UserException;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class DefaultAuthenticationController implements AuthenticationController, Controller {
@@ -25,7 +23,6 @@ public class DefaultAuthenticationController implements AuthenticationController
     private AuthorService authorService;
     private PaperService paperService;
     private AbstractService abstractService;
-
     private ConferenceSessionService conferenceSessionService;
 
     @FXML
@@ -63,6 +60,9 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     @FXML
     private TextField textFieldLoginPassword;
+
+    @FXML
+     private Button exitButton ;
 
     ToggleGroup toggleGroupUserRole;
 
@@ -148,9 +148,10 @@ public class DefaultAuthenticationController implements AuthenticationController
     }
 
     private void openWindow(String userView,User user) {
-        Stage primaryStage = new Stage();
+
         FXMLLoader loader = new FXMLLoader(DefaultAuthenticationController.class.getResource("/views/components/"+userView+"Window.fxml"));
         BorderPane pane = null;
+        Stage primaryStage = new Stage();
         try {
             pane = loader.load();
         } catch (IOException e) {
@@ -207,12 +208,21 @@ public class DefaultAuthenticationController implements AuthenticationController
     }
 
     public void setControllerServices(Controller controller){
-        controller.setAuthorService(authorService);
+       controller.setAuthorService(authorService);
         controller.setPaperService(paperService);
         controller.setAbstractService(abstractService);
+        controller.setConferenceSessionService(conferenceSessionService);
     }
+
 
     public void setControllerCurrentUser(Controller controller,User user){
         controller.setCurrentUser(user);
+    }
+
+
+
+    public void handleExit() {
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 }

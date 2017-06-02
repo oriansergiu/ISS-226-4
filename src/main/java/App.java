@@ -54,6 +54,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/views/components/Authentication.fxml"));
         BorderPane pane = loader.load();
         authenticationController = loader.getController();
+       // authenticationController.setMainApplic(this);
         Scene scene = new Scene(pane);
         primaryStage.setScene(scene);
         primaryStage.show();
