@@ -145,13 +145,6 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     public void setModifyView(ConferenceSession session){
         abstractDeadline.setText(String.valueOf(session.getAbstractDeadline()));
         proposalDeadline.setText(String.valueOf(session.getProposalDeadline()));
-
-
-        deadlineButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-               // handleModifyPaper(paper);
-            }
-        });
     }
 
 
@@ -162,20 +155,26 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
         String abstractDeadline = this.abstractDeadline.getText();
         String proposalDeadline = this.proposalDeadline.getText();
 
+        ConferenceSession session = sessionTableView.getSelectionModel().getSelectedItem();
+        System.out.println(this.proposalDeadline.getText());
+
         Date abs= null;
         Date prop=null;
         try {
-            abs = new SimpleDateFormat("dd/MM/yyyy").parse(abstractDeadline);
-            prop=new SimpleDateFormat("dd/MM/yyyy").parse(proposalDeadline);
+            abs = new SimpleDateFormat("yyyy-MM-dd").parse(abstractDeadline);
+            prop=new SimpleDateFormat("yyyy-MM-dd").parse(proposalDeadline);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        ConferenceSession conferenceSession = new ConferenceSession();
-        conferenceSession.setAbstractDeadline(abs);
-        conferenceSession.setProposalDeadline(prop);
+        System.out.println(prop);
 
-        conferenceSessionService.updateConferenceSession(conferenceSession);
+        session.setAbstractDeadline(abs);
+        session.setProposalDeadline(prop);
+        conferenceSessionService.updateConferenceSession(session);
+        this.abstractDeadline.setText("");
+        this.proposalDeadline.setText("");
+
    }
 
 

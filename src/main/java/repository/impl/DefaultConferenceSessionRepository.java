@@ -33,7 +33,6 @@ public class DefaultConferenceSessionRepository implements ConferenceSessionRepo
 
     @Override
     public void update(ConferenceSession conferenceSession) {
-        //The paper that gets here has to be a persisted one
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(conferenceSession);

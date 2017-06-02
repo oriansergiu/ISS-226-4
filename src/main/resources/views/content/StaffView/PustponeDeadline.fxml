@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="deadlineButton" layoutX="325.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleChangeDeadline" text="Pustpone Deadlines" />
+      <Button fx:id="deadlineButton" layoutX="325.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleChangeDeadline" text="Postpone Deadlines" />
       <TextField fx:id="proposalDeadline" layoutX="142.0" layoutY="75.0" />
       <Label layoutX="25.0" layoutY="79.0" prefHeight="17.0" prefWidth="98.0" text="Proposal Deadline" />
       <TextField fx:id="abstractDeadline" layoutX="142.0" layoutY="25.0" />
