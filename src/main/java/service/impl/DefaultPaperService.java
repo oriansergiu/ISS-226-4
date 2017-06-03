@@ -4,9 +4,8 @@ import model.Paper;
 import repository.PaperRepository;
 import service.PaperService;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+import java.util.List;
+
 public class DefaultPaperService implements PaperService{
     private PaperRepository paperRepository;
     @Override
@@ -22,5 +21,10 @@ public class DefaultPaperService implements PaperService{
     @Override
     public void updatePaper(Paper paper) {
         paperRepository.update(paper);
+    }
+
+    @Override
+    public List<Paper> getAll() {
+        return paperRepository.getAll();
     }
 }

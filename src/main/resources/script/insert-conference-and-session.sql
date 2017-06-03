@@ -1,0 +1,2 @@
+INSERT INTO `conference`(`id`,`name`) VALUES (1, 'DEVTALKS CLUJ');
+INSERT INTO `conferencesession`(`id`, `abstractDeadline`, `endDate`, `feeValue`, `proposalDeadline`, `startDate`) VALUES (1, '2017-10-12', '2017-12-12', 220.00000, '2017-10-22', '2017-08-15');

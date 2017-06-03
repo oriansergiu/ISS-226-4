@@ -1,7 +1,9 @@
 package repository;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+import model.Reviewer;
+
 public interface ReviewerRepository {
+    void save(Reviewer reviewer);
+    void update(Reviewer reviewer);
+    Reviewer getReviewerByUserId(Integer id);
 }

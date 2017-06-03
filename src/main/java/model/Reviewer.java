@@ -10,13 +10,16 @@ public class Reviewer {
     @GeneratedValue
     private Integer id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "papers_to_review")
     private List<Paper> papersToReview;
 
     @ManyToMany
     @JoinTable(name = "abstracts_to_review")
     private List<Abstract> abstractsToReview;
+
+    @OneToOne
+    private User user;
 
     public Integer getId() {
         return id;
@@ -40,5 +43,13 @@ public class Reviewer {
 
     public void setAbstractsToReview(List<Abstract> abstractsToReview) {
         this.abstractsToReview = abstractsToReview;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

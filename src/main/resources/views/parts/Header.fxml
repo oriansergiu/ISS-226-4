@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
-<GridPane styleClass="topWrapper" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
-    <padding><Insets left="5" right="5"/></padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane styleClass="topWrapper" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <padding><Insets left="5" right="5" /></padding>
     <columnConstraints>
-        <ColumnConstraints percentWidth="50.0"  />
+        <ColumnConstraints percentWidth="50.0" />
     </columnConstraints>
-    <Label text="This is a test header, it will be changed." GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <Label text="This is a test header, it will be changed." GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <GridPane.margin>
+         <Insets bottom="10.0" />
+      </GridPane.margin></Label>
     <columnConstraints>
-        <ColumnConstraints percentWidth="50.0"  />
+        <ColumnConstraints percentWidth="50.0" />
+      <ColumnConstraints />
     </columnConstraints>
-    <Label text="Version 0.0.1" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
