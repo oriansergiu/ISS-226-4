@@ -21,10 +21,13 @@ import model.Author;
 import model.Paper;
 import model.User;
 import service.*;
+import util.AlertUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +45,7 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     private User user;
     private Author author;
     private DefaultAuthenticationController autentificationController;
-
+    private boolean accepted;
 
     @FXML
     public Button showAddPaperBtn;
@@ -171,8 +174,6 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
             }
         }
 
-        //Author thisAuthor = ;
-        //Author thisAuthor = authorService.getAuthorByUserId(user);
         if(author == null){
             author = new Author();
             author.setUser(user);
@@ -221,22 +222,29 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
 
     @FXML
     public void handleShowAddPaperBtn(){
-        System.out.println("handle show add paper");
-        System.out.println(user);
-        System.out.println(authorService);
-        System.out.println(this);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
-
-        AnchorPane pane = null;
-        try {
-            fxmlLoader.setController(this);
-            pane = fxmlLoader.load();
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(pane);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(user.getSession().getAbstractDeadline().compareTo(new Date()) <= 0)
+        {
+            AlertUtil.showAlertMessage(Alert.AlertType.WARNING, "The deadline for new papers passed");
         }
+        else{
+            System.out.println("handle show add paper");
+            System.out.println(user);
+            System.out.println(authorService);
+            System.out.println(this);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
+
+            AnchorPane pane = null;
+            try {
+                fxmlLoader.setController(this);
+                pane = fxmlLoader.load();
+                centerPane.getChildren().clear();
+                centerPane.getChildren().add(pane);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void setControllerServices(Controller controller){
@@ -255,8 +263,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
             pane = fxmlLoader.load();
             centerPane.getChildren().clear();
             centerPane.getChildren().add(pane);
+            accepted=false;
             setModifyView(paper);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -274,8 +282,10 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
             pane = fxmlLoader.load();
             centerPane.getChildren().clear();
             centerPane.getChildren().add(pane);
+            accepted = true;
             setModifyView(paper);
             abstractTA.setEditable(false);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -311,6 +321,28 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         KeywordsTF.setEditable(false);
         TopicsTF.setEditable(false);
         coAuthorsTF.setEditable(false);
+        if(user.getSession().getAbstractDeadline().compareTo(new Date()) <= 0)
+        {
+            abstractTA.setEditable(false);
+        }
+//        Date today = new Date();
+        Timestamp today = new Timestamp(System.currentTimeMillis());
+        if((user.getSession().getProposalDeadline().before(today) && !accepted)){
+                uploadPaperBtn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        AlertUtil.showAlertMessage(Alert.AlertType.WARNING, "The deadline for proposal passed");
+                    }
+                });
+        }
+        if(user.getSession().getStartDate().before(today)){
+            uploadPaperBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    AlertUtil.showAlertMessage(Alert.AlertType.WARNING, "The deadline for proposal passed");
+                }
+            });
+        }
         addPaperBtn.setText("Modify paper");
         addPaperBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
