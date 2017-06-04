@@ -208,6 +208,11 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         proposedPapers.add(paper);
         author.setProposedPapers(proposedPapers);
         authorService.updateAuthor(author);
+
+        //proposedPapers = new ArrayList<>(author.getProposedPapers());
+        ObservableList<Paper> observableList = FXCollections.observableList(proposedPapers);
+        proposedPapersTableView.setItems(observableList);
+
     }
 
     @FXML
@@ -257,6 +262,27 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         }
 
     }
+
+    @FXML
+    public void handleAcceptedSelectionChanged(){
+        Paper paper = acceptedPapersTableView.getSelectionModel().getSelectedItem();
+        System.out.println(paper);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
+        AnchorPane pane = null;
+        try {
+            fxmlLoader.setController(this);
+            pane = fxmlLoader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(pane);
+            setModifyView(paper);
+            abstractTA.setEditable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @FXML
     public void handleUploadPaper(){
