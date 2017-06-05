@@ -31,7 +31,6 @@ public class DefaultReviewerController implements Controller {
     private User user;
     private Reviewer reviewer;
 
-
     private ToggleGroup toggleGroupCardType  = new ToggleGroup();
 
     @FXML
@@ -125,7 +124,10 @@ public class DefaultReviewerController implements Controller {
 
     @FXML
     public void initialize() {
-
+        toggleGroupCardType = new ToggleGroup();
+        maestroRadioButton.setToggleGroup(toggleGroupCardType);
+        mastercardRadioButton.setToggleGroup(toggleGroupCardType);
+        visaRadioButton.setToggleGroup(toggleGroupCardType);
     }
 
     @Override
@@ -225,7 +227,6 @@ public class DefaultReviewerController implements Controller {
             error = 1;
             msg+= "You must accept the terms to continue\n";
         }
-
 
         if(toggleGroupCardType.getSelectedToggle() == null){
             msg+="You must select the card type\n";
@@ -444,5 +445,25 @@ public class DefaultReviewerController implements Controller {
 
             listViewReviewedPapersAllVotes.setItems(FXCollections.observableList(reviewsModel));
         }
+    }
+
+    public void handlePay(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/ListenerView/PayView.fxml"));
+
+        AnchorPane pane = null;
+        try {
+            fxmlLoader.setController(this);
+            pane = fxmlLoader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(pane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        monthChoiceBox.getItems().setAll("Select","1","2","3","4","5","6","7","8","9","10","11","12");
+        monthChoiceBox.setValue("Select");
+        yearChoiceBox.getItems().setAll("2018","2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006");
+        yearChoiceBox.setValue("2017");
     }
 }
