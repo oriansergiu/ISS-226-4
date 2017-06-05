@@ -1,12 +1,9 @@
 package controller.impl;
 
-import com.mysql.cj.api.Session;
 import controller.Controller;
 import controller.StaffWindowController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -15,9 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import model.Conference;
 import model.ConferenceSession;
-import model.Paper;
 import model.User;
 import service.*;
 
@@ -66,7 +61,6 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     @FXML
     private Button deadlineButton;
 
-
     public DefaultStaffWindowController() {
     }
 
@@ -75,8 +69,6 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     {
         sessionsColumn.setCellValueFactory(new PropertyValueFactory<ConferenceSession,Date>("startDate"));
     }
-
-
 
     @Override
     public void setUserService(UserService userService) {
@@ -147,10 +139,8 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
         proposalDeadline.setText(String.valueOf(session.getProposalDeadline()));
     }
 
-
-
     @FXML
-   public void handleChangeDeadline() {
+    public void handleChangeDeadline() {
 
         String abstractDeadline = this.abstractDeadline.getText();
         String proposalDeadline = this.proposalDeadline.getText();
@@ -174,9 +164,5 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
         conferenceSessionService.updateConferenceSession(session);
         this.abstractDeadline.setText("");
         this.proposalDeadline.setText("");
-
    }
-
-
-
 }

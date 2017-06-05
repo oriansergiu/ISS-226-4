@@ -94,5 +94,11 @@ public class Paper {
         this.author = author;
     }
 
+    public List<PaperReview> getReviews() {
+        return reviews;
+    }
 
+    public void setReviews(List<PaperReview> reviews) {
+        this.reviews = reviews;
+    }
 }

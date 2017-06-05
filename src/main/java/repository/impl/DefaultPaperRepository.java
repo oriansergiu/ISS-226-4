@@ -1,6 +1,7 @@
 package repository.impl;
 
 import model.Paper;
+import model.PaperReview;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import repository.PaperRepository;
@@ -45,9 +46,28 @@ public class DefaultPaperRepository implements PaperRepository {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Paper> list = session.createQuery("from Paper").list();
+        for (Paper p : list) {
+            p.getReviews().size();
+        }
         session.getTransaction().commit();
         session.close();
 
         return list;
+    }
+
+    @Override
+    public List<PaperReview> getReviewsByPaperId(Integer id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Paper paper = session.load(Paper.class, id);
+        paper.getReviews().size();
+        for (PaperReview review : paper.getReviews()) {
+            review.getReviewer().getUser().getFirstName().length();
+            review.getReviewer().getUser().getLastName().length();
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        return paper.getReviews();
     }
 }

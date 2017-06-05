@@ -5,11 +5,12 @@ import model.Paper;
 import model.PaperReview;
 import model.Reviewer;
 import model.User;
-import org.hibernate.Hibernate;
 import repository.ReviewerRepository;
 import service.ReviewerService;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultReviewerService implements ReviewerService {
     private ReviewerRepository reviewerRepository;
@@ -39,7 +40,7 @@ public class DefaultReviewerService implements ReviewerService {
     }
 
     @Override
-    public void reviewPaper(Reviewer reviewer, Paper paper, String comment, AcceptanceType qualifier) {
+    public PaperReview reviewPaper(Reviewer reviewer, Paper paper, String comment, AcceptanceType qualifier) {
         PaperReview paperReview = new PaperReview();
         paperReview.setPaper(paper);
         paperReview.setReviewer(reviewer);
@@ -47,6 +48,7 @@ public class DefaultReviewerService implements ReviewerService {
         paperReview.setComment(comment);
 
         reviewerRepository.reviewPaper(paperReview);
-    }
 
+        return paperReview;
+    }
 }

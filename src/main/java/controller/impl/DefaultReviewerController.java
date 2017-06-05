@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import model.Abstract;
-import model.Paper;
-import model.Reviewer;
-import model.User;
+import model.*;
 import org.hibernate.Hibernate;
 import service.*;
 
@@ -88,6 +85,9 @@ public class DefaultReviewerController implements Controller {
 
     @FXML
     public TextArea textAreaReviewPapersComment;
+
+    @FXML
+    public ListView<String> listViewReviewedPapersAllVotes;
 
     ToggleGroup toggleGroupAcceptanceType;
 
@@ -296,10 +296,63 @@ public class DefaultReviewerController implements Controller {
                 acceptanceType = AcceptanceType.STRONG_ACCEPT;
             }
 
-            reviewerService.reviewPaper(reviewer, paper,textAreaReviewPapersComment.getText(), acceptanceType);
+            PaperReview paperReview = reviewerService.reviewPaper(reviewer, paper,textAreaReviewPapersComment.getText(), acceptanceType);
 
             reviewPapersAllPapersModel.remove(paper);
             reviewPapersReviewedPapersModel.add(paper);
+
+            reviewer.setPapersToReview(reviewPapersAllPapersModel);
+            reviewer.setPapersReviewed(reviewPapersReviewedPapersModel);
+
+            reviewerService.update(reviewer);
+            List<PaperReview> paperReviews = new ArrayList<>(paper.getReviews());
+            paperReviews.add(paperReview);
+            paper.setReviews(paperReviews);
+
+            paperService.updatePaper(paper);
+        }
+    }
+
+    @FXML
+    public void handleSelectionChangedReviewdPapers() {
+        Paper paper = tableViewReviewPapersReviewed.getSelectionModel().getSelectedItem();
+
+        if (paper != null) {
+            List<PaperReview> reviews = paperService.getReviewsForPaper(paper);
+            List<String> reviewsModel = new ArrayList<>();
+
+            for (PaperReview review : reviews) {
+                String qualifier = "";
+
+                switch (review.getQualifier()) {
+                    case 0:
+                        qualifier = "STRONG REJECT";
+                        break;
+                    case 1:
+                        qualifier = "REJECT";
+                        break;
+                    case 2:
+                        qualifier = "WEAK REJECT";
+                        break;
+                    case 3:
+                        qualifier = "BORDERLINE PAPER";
+                        break;
+                    case 4:
+                        qualifier = "WEAK ACCEPT";
+                        break;
+                    case 5:
+                        qualifier = "ACCEPT";
+                        break;
+                    case 6:
+                        qualifier = "STRONG ACCEPT";
+                        break;
+                }
+
+                String s = review.getReviewer().getUser().getFirstName() + " " + review.getReviewer().getUser().getFirstName() + ": " + qualifier;
+                reviewsModel.add(s);
+            }
+
+            listViewReviewedPapersAllVotes.setItems(FXCollections.observableList(reviewsModel));
         }
     }
 }

@@ -1,9 +1,11 @@
 package service.impl;
 
 import model.Paper;
+import model.PaperReview;
 import repository.PaperRepository;
 import service.PaperService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class DefaultPaperService implements PaperService{
@@ -26,5 +28,11 @@ public class DefaultPaperService implements PaperService{
     @Override
     public List<Paper> getAll() {
         return paperRepository.getAll();
+    }
+
+    @Transactional
+    @Override
+    public List<PaperReview> getReviewsForPaper(Paper paper) {
+        return paperRepository.getReviewsByPaperId(paper.getId());
     }
 }
