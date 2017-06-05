@@ -13,10 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import model.Abstract;
-import model.Author;
-import model.Paper;
-import model.User;
+import model.*;
 import service.*;
 import util.AlertUtil;
 
@@ -29,6 +26,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class DefaultListenerWindowController implements ListenerWindowController, Controller {
     private AbstractService abstractService;
@@ -49,7 +47,7 @@ public class DefaultListenerWindowController implements ListenerWindowController
     private AnchorPane centerPane;
 
     @FXML
-    private ChoiceBox<String> mounthChoiceBox;
+    private ChoiceBox<String> monthChoiceBox;
 
     @FXML
     private ChoiceBox<String> yearChoiceBox;
@@ -59,6 +57,15 @@ public class DefaultListenerWindowController implements ListenerWindowController
     private RadioButton mastercardRadioButton = new RadioButton();
     @FXML
     private RadioButton maestroRadioButton = new RadioButton();
+
+    @FXML
+    private TextField cvvCodeText;
+
+    @FXML
+    private TextField cardCodeText;
+
+    @FXML
+    private RadioButton termsRadioButton;
 
     @FXML
     public void initialize() {
@@ -106,6 +113,7 @@ public class DefaultListenerWindowController implements ListenerWindowController
 
     @Override
     public void setCurrentUser(User user) {
+        this.user = user;
     }
 
     public void handlePay(){
@@ -122,14 +130,75 @@ public class DefaultListenerWindowController implements ListenerWindowController
             e.printStackTrace();
         }
 
-        mounthChoiceBox.getItems().setAll("Select","1","2","3","4","5","6","7","8","9","10","11","12");
-        mounthChoiceBox.setValue("Select");
+        monthChoiceBox.getItems().setAll("Select","1","2","3","4","5","6","7","8","9","10","11","12");
+        monthChoiceBox.setValue("Select");
         yearChoiceBox.getItems().setAll("2018","2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006");
         yearChoiceBox.setValue("2017");
     }
 
+
+    public int verifyPay(){
+        Integer error = 0;
+        String msg = "";
+        String month = monthChoiceBox.getValue();
+        String year = yearChoiceBox.getValue();
+        String cvv = cvvCodeText.getText();
+        String code = cardCodeText.getText();
+
+        if(Objects.equals(month, "Select")){
+            error = 1;
+            msg += "Please select the month\n";
+        }
+
+        if(Objects.equals(year, "")){
+            error = 1;
+            msg += "Please select the year\n";
+        }
+
+        if(Objects.equals(cvv, "")){
+            error = 1;
+            msg += "Please enter the cvv code\n";
+        }
+
+        if(Objects.equals(code, "")){
+            error = 1;
+            msg += "Please enter the card code\n";
+        }
+
+        if(!(termsRadioButton.isSelected())){
+            error = 1;
+            msg+= "You must accept the terms to continue\n";
+        }
+
+
+        if(toggleGroupCardType.getSelectedToggle() == null){
+            msg+="You must select the card type\n";
+            error = 1;
+        }
+        if(error==1){
+            AlertUtil.showAlertMessage(Alert.AlertType.ERROR,msg);
+        }
+        else
+            restore();
+
+        return error;
+
+    }
+
+    private void restore() {
+        cardCodeText.setText("");
+        cvvCodeText.setText("");
+        toggleGroupCardType.selectToggle(null);
+        termsRadioButton.setSelected(false);
+        monthChoiceBox.setValue("Select");
+        yearChoiceBox.setValue("2017");
+    }
+
     public void handleSubmit(){
-        System.out.println("Controller is ready to fucked up!");
+        if(verifyPay() == 1){
+            return;
+        }
+       user.setRegistrationFee(true);
     }
 
 

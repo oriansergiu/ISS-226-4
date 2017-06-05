@@ -32,7 +32,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="mounthChoiceBox" layoutX="122.0" layoutY="108.0" prefHeight="31.0" prefWidth="137.0">
+      <ChoiceBox fx:id="monthChoiceBox" layoutX="122.0" layoutY="108.0" prefHeight="31.0" prefWidth="137.0">
       </ChoiceBox>
       <Label layoutX="39.0" layoutY="108.0" prefHeight="31.0" prefWidth="77.0" text="Card date">
          <font>

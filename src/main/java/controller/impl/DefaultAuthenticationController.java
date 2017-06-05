@@ -213,6 +213,7 @@ public class DefaultAuthenticationController implements AuthenticationController
         } catch (UserException e) {
             AlertUtil.showAlertMessage(Alert.AlertType.WARNING, e.getMessage());
         }
+        restoreRegister();
     }
 
     public void loadMainWindow(User user) {
@@ -245,6 +246,8 @@ public class DefaultAuthenticationController implements AuthenticationController
     private void openWindow(String userView,User user) {
         FXMLLoader loader = new FXMLLoader(DefaultAuthenticationController.class.getResource("/views/components/"+userView+"Window.fxml"));
         BorderPane pane = null;
+        System.out.println(userView.toString());
+        System.out.println(userView);
         Stage primaryStage = new Stage();
         try {
             pane = loader.load();
@@ -312,6 +315,17 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     public void setControllerCurrentUser(Controller controller,User user){
         controller.setCurrentUser(user);
+    }
+
+
+    public void restoreRegister(){
+        textFieldRegisterFirstName.setText("");
+        textFieldRegisterLastName.setText("");
+        textFieldRegisterAffiliation.setText("");
+        textFieldRegisterEmail.setText("");
+        textFieldRegisterPassword.setText("");
+        textFieldRegisterPasswordRepeat.setText("");
+        toggleGroupUserRole.selectToggle(null);
     }
 
 

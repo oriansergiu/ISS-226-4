@@ -15,7 +15,7 @@
 <BorderPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthenticationController">
     <center>
         <GridPane alignment="CENTER">
-            <Label text="AUTHENTICATION" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+            <Label text="AUTHENTIFICATION" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
             <Label text="REGISTRATION" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
             <!-- Login side -->
             <GridPane alignment="CENTER" hgap="10" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
