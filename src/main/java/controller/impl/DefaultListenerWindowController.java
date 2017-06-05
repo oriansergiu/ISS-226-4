@@ -1,28 +1,34 @@
 package controller.impl;
 
+import controller.AuthorWindowController;
 import controller.Controller;
+import controller.ListenerWindowController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import model.Abstract;
-import model.Paper;
-import model.Reviewer;
-import model.User;
-import org.hibernate.Hibernate;
+import javafx.stage.FileChooser;
+import model.*;
 import service.*;
 import util.AlertUtil;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class DefaultReviewerController implements Controller {
+public class DefaultListenerWindowController implements ListenerWindowController, Controller {
     private AbstractService abstractService;
     private UserService userService;
     private AuthorService authorService;
@@ -31,10 +37,14 @@ public class DefaultReviewerController implements Controller {
     private SectionService sectionService;
     private ConferenceSessionService conferenceSessionService;
     private User user;
-    private Reviewer reviewer;
-
+    private Author author;
+    private DefaultAuthenticationController autentificationController;
+    private boolean accepted;
 
     private ToggleGroup toggleGroupCardType  = new ToggleGroup();
+
+    @FXML
+    private AnchorPane centerPane;
 
     @FXML
     private ChoiceBox<String> monthChoiceBox;
@@ -58,31 +68,11 @@ public class DefaultReviewerController implements Controller {
     private RadioButton termsRadioButton;
 
     @FXML
-    public AnchorPane centerPane;
-
-    @FXML
-    public Label labelReviewerDateError;
-
-    @FXML
-    public TableView<Paper> tableViewBidPapers;
-
-    @FXML
-    public TableColumn<Paper,String> tableColumnBidPapersAllPapers;
-
-    @FXML
-    public TextArea textAreaBidPapersPaperAbstract;
-
-    @FXML
-    public TableView<Paper> tableViewBidPapersAdded;
-
-    public TableColumn<Paper, String> tableColumnBidPapersAdded;
-
-    private ObservableList<Paper> bidPapersAllPapersModel;
-    private ObservableList<Paper> bidPapersAddedPapersModel;
-
-    @FXML
     public void initialize() {
-
+        toggleGroupCardType = new ToggleGroup();
+        maestroRadioButton.setToggleGroup(toggleGroupCardType);
+        mastercardRadioButton.setToggleGroup(toggleGroupCardType);
+        visaRadioButton.setToggleGroup(toggleGroupCardType);
     }
 
     @Override
@@ -120,34 +110,32 @@ public class DefaultReviewerController implements Controller {
         this.abstractService = abstractService;
     }
 
+
     @Override
     public void setCurrentUser(User user) {
         this.user = user;
-
-        Reviewer reviewer = reviewerService.getReviewerByUser(user);
-
-        if (reviewer == null) {
-            reviewer = new Reviewer();
-            reviewer.setUser(user);
-            reviewerService.save(reviewer);
-        }
-
-        this.reviewer = reviewer;
     }
 
-    private void loadMainView(String componentName) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/content/ReviewerView/" + componentName + ".fxml"));
-        AnchorPane pane = null;
+    public void handlePay(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/ListenerView/PayView.fxml"));
 
+        AnchorPane pane = null;
         try {
-            loader.setController(this);
-            pane = loader.load();
+            fxmlLoader.setController(this);
+            pane = fxmlLoader.load();
             centerPane.getChildren().clear();
             centerPane.getChildren().add(pane);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        monthChoiceBox.getItems().setAll("Select","1","2","3","4","5","6","7","8","9","10","11","12");
+        monthChoiceBox.setValue("Select");
+        yearChoiceBox.getItems().setAll("2018","2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006");
+        yearChoiceBox.setValue("2017");
     }
+
 
     public int verifyPay(){
         Integer error = 0;
@@ -210,66 +198,8 @@ public class DefaultReviewerController implements Controller {
         if(verifyPay() == 1){
             return;
         }
-        user.setRegistrationFee(true);
+       user.setRegistrationFee(true);
     }
 
-    @FXML
-    public void handleShowBinPapersView() {
-        if (user.getSession().getAbstractDeadline().compareTo(new Date()) >= 0) {
-            loadMainView("DateError");
-            labelReviewerDateError.setText("The bid period hasn't started yet, please come back after " + user.getSession().getAbstractDeadline().toString());
-        }
-        else {
-            loadMainView("BidPapers");
-            tableColumnBidPapersAllPapers.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
-            List<Paper> papers = paperService.getAll();
-            List<Paper> reviewerPapers = reviewer.getPapersToReview();
 
-            if (reviewerPapers != null) {
-                for (int i = 0; i < papers.size(); i++) {
-                    for (Paper p : reviewerPapers) {
-                        if (p.getId().equals(papers.get(i).getId())) ;
-                        papers.remove(i);
-                        break;
-                    }
-                }
-            }
-
-            bidPapersAllPapersModel = FXCollections.observableList(papers);
-            tableViewBidPapers.setItems(bidPapersAllPapersModel);
-
-            tableColumnBidPapersAdded.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
-            if (reviewerPapers != null) {
-                bidPapersAddedPapersModel = FXCollections.observableList(reviewerPapers);
-            } else {
-                bidPapersAddedPapersModel = FXCollections.observableArrayList(new ArrayList<Paper>());
-            }
-            tableViewBidPapersAdded.setItems(bidPapersAddedPapersModel);
-        }
-    }
-
-    @FXML
-    public void handleBidPapersSelectionChanged() {
-        Paper paper = tableViewBidPapers.getSelectionModel().getSelectedItem();
-
-        if (paper != null) {
-            textAreaBidPapersPaperAbstract.setText(paper.getPaperAbstract().getText());
-            textAreaBidPapersPaperAbstract.setEditable(false);
-        }
-    }
-
-    @FXML
-    public void handleBidPapersBid() {
-        Paper paper = tableViewBidPapers.getSelectionModel().getSelectedItem();
-
-        if (paper != null) {
-
-            List<Paper> reviewerPapers = new ArrayList<>(reviewer.getPapersToReview());
-            reviewerPapers.add(paper);
-            reviewerService.update(reviewer);
-
-            bidPapersAllPapersModel.remove(paper);
-            bidPapersAddedPapersModel.add(paper);
-        }
-    }
 }

@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthenticationController">
+<BorderPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthenticationController">
     <center>
         <GridPane alignment="CENTER">
-            <Label text="AUTHENTICATION" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+            <Label text="AUTHENTIFICATION" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
             <Label text="REGISTRATION" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
             <!-- Login side -->
             <GridPane alignment="CENTER" hgap="10" vgap="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
@@ -49,7 +49,7 @@
             <GridPane alignment="CENTER" hgap="10" vgap="5" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <padding><Insets bottom="10" left="25" right="10" top="10" /></padding>
                 <Label text="Firstname:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
-                <TextField fx:id="textFieldRegisterFirstName" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" />
+                <TextField fx:id="textFieldRegisterFirstName" prefWidth="204.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" />
                 <Label text="Lastname:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                 <TextField fx:id="textFieldRegisterLastName" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
                 <Label text="Email:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
