@@ -1,5 +1,6 @@
 package controller.impl;
 
+import com.sun.prism.paint.Color;
 import controller.AuthenticationController;
 import controller.Controller;
 import enums.UserRole;
@@ -7,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import model.User;
 import service.*;
@@ -17,6 +20,7 @@ import validator.exceptions.UserException;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.Objects;
 
 public class DefaultAuthenticationController implements AuthenticationController, Controller {
     private UserService userService;
@@ -51,7 +55,7 @@ public class DefaultAuthenticationController implements AuthenticationController
     private TextField textFieldRegisterPassword;
 
     @FXML
-    private TextField textFieldRegisterRepeatPassword;
+    private TextField textFieldRegisterPasswordRepeat;
 
     @FXML
     private TextField textFieldRegisterAffiliation;
@@ -79,7 +83,28 @@ public class DefaultAuthenticationController implements AuthenticationController
         radioButtonRegisterUserRoleStaff.setToggleGroup(toggleGroupUserRole);
     }
 
+    public int verifyLogin(){
+        Integer error = 0;
+        if(Objects.equals(textFieldLoginEmail.getText(), "")){
+            textFieldLoginEmail.setStyle("-fx-control-inner-background: #5ef4d2");
+            error = 1;
+        }
+        else{
+            textFieldLoginEmail.setStyle("-fx-control-inner-background: #FFFFFF");
+        }
+        if(Objects.equals(textFieldLoginPassword.getText(), "")){
+            textFieldLoginPassword.setStyle("-fx-control-inner-background: #5ef4d2");
+            error = 1;
+        }
+        else{
+            textFieldLoginPassword.setStyle("-fx-control-inner-background: #FFFFFF");
+        }
+        return error;
+
+    }
     public void handleLogin() {
+        if(verifyLogin() == 1)
+            return;
         try {
             User user = userService.loginUser(textFieldLoginEmail.getText(), textFieldLoginPassword.getText());
             loadMainWindow(user);
@@ -88,8 +113,71 @@ public class DefaultAuthenticationController implements AuthenticationController
         }
     }
 
+    public int verify(){
+        Integer error = 0;
+        if(Objects.equals(textFieldRegisterFirstName.getText(), "")){
+            textFieldRegisterFirstName.setStyle("-fx-control-inner-background: #5ef4d2");
+            error =1;
+        }
+        else{
+            textFieldRegisterFirstName.setStyle("-fx-control-inner-background: #FFFFFF");
+        }
+
+        if(Objects.equals(textFieldRegisterLastName.getText(), "")){
+            textFieldRegisterLastName.setStyle("-fx-control-inner-background: #5ef4d2");
+            error =1;
+        }
+        else{
+            textFieldRegisterLastName.setStyle("-fx-control-inner-background: #FFFFFF");
+        }
+        if(Objects.equals(textFieldRegisterEmail.getText(), "")){
+            textFieldRegisterEmail.setStyle("-fx-control-inner-background: #5ef4d2");
+            error =1;
+        }
+        else{
+            textFieldRegisterEmail.setStyle("-fx-control-inner-background: #FFFFFF");
+
+        }
+
+        if(Objects.equals(textFieldRegisterPassword.getText(), "")){
+            textFieldRegisterPassword.setStyle("-fx-control-inner-background: #5ef4d2");
+            error =1;
+        }
+        else{
+            textFieldRegisterPassword.setStyle("-fx-control-inner-background: #FFFFFF");
+
+        }
+
+        if(Objects.equals(textFieldRegisterPasswordRepeat.getText(), "")){
+            textFieldRegisterPasswordRepeat.setStyle("-fx-control-inner-background: #5ef4d2");
+            error =1;
+        }
+        else{
+            textFieldRegisterPasswordRepeat.setStyle("-fx-control-inner-background: #FFFFFF");
+
+        }
+        if(Objects.equals(textFieldRegisterAffiliation.getText(), "")){
+            textFieldRegisterAffiliation.setStyle("-fx-control-inner-background: #5ef4d2");
+            error =1;
+        }
+        else{
+            textFieldRegisterAffiliation.setStyle("-fx-control-inner-background: #FFFFFF");
+
+        }
+
+
+
+    if(toggleGroupUserRole.getSelectedToggle() == null){
+        AlertUtil.showAlertMessage(Alert.AlertType.ERROR,"Must select a type");
+        error = 1;
+    }
+        return error;
+    }
+
     public void handleRegister() {
         User user = new User();
+        if(verify()==1)
+            return;
 
         user.setFirstName(textFieldRegisterFirstName.getText());
         user.setLastName(textFieldRegisterLastName.getText());
@@ -129,6 +217,12 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     public void loadMainWindow(User user) {
         switch (user.getUserRole()) {
+            case (0):
+            {
+                openWindow("Listener",user);
+                break;
+
+            }
             case (1):
             {
                 openWindow("Author",user);
@@ -149,7 +243,6 @@ public class DefaultAuthenticationController implements AuthenticationController
     }
 
     private void openWindow(String userView,User user) {
-
         FXMLLoader loader = new FXMLLoader(DefaultAuthenticationController.class.getResource("/views/components/"+userView+"Window.fxml"));
         BorderPane pane = null;
         Stage primaryStage = new Stage();

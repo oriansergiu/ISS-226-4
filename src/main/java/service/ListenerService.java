@@ -1,7 +1,9 @@
 package service;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+
+import repository.ListenerRepository;
+
 public interface ListenerService {
+    void setListenerRepository(ListenerRepository listenerRepository);
+    void setPaperService(PaperService paperService);
 }

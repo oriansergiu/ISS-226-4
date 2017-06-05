@@ -53,9 +53,6 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @FXML
     public TitledPane proposedPapersTP;
 
-    @FXML
-        public Button LogoutButton;
-
 
     @FXML
     public Button uploadPaperBtn;

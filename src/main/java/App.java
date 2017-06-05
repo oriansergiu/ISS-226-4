@@ -13,6 +13,9 @@ import service.impl.*;
 import java.io.IOException;
 
 public class App extends Application {
+    private ListenerRepository listenerRepository = new DefaultListenerRepository();
+    private ListenerService listenerService = new DefaultListenerService();
+
     private AbstractRepository abstractRepository = new DefaultAbstractRepository();
     private AbstractService abstractService = new DefaultAbstractService();
 
@@ -38,6 +41,7 @@ public class App extends Application {
     }
 
     private void setRepositoriesToServices() {
+        listenerService.setListenerRepository(listenerRepository);
         userService.setUserRepository(userRepository);
         conferenceSessionService.setConferenceSessionRepository(conferenceSessionRepository);
         paperService.setPaperRepository(paperRepository);
