@@ -355,7 +355,14 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         if(verifyPay() == 1){
             return;
         }
+
         user.setRegistrationFee(true);
+        userService.update(user);
+//        if(userService == null)
+//            System.out.println("null");
+//        else
+//            System.out.println("not null");
+//        //userService.update(user);
     }
 
     public void setControllerServices(Controller controller){

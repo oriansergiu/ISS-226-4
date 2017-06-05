@@ -199,6 +199,7 @@ public class DefaultListenerWindowController implements ListenerWindowController
             return;
         }
        user.setRegistrationFee(true);
+        userService.update(user);
     }
 
 
