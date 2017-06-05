@@ -313,6 +313,7 @@ public class DefaultAuthenticationController implements AuthenticationController
         controller.setConferenceSessionService(conferenceSessionService);
         controller.setReviewerService(reviewerService);
         controller.setSectionService(sectionService);
+        controller.setUserService(userService);
     }
 
 

@@ -256,6 +256,7 @@ public class DefaultReviewerController implements Controller {
             return;
         }
         user.setRegistrationFee(true);
+        userService.update(user);
     }
 
     @FXML

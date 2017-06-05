@@ -263,14 +263,4 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
             }
 
     }
-
-
-    public void setControllerServices(Controller controller){
-        controller.setAuthorService(authorService);
-        controller.setPaperService(paperService);
-        controller.setAbstractService(abstractService);
-        controller.setConferenceSessionService(conferenceSessionService);
-        controller.setReviewerService(reviewerService);
-        controller.setSectionService(sectionService);
-    }
 }
