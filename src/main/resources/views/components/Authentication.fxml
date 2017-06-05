@@ -25,7 +25,7 @@
                 <Label text="Password:" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                 <PasswordField fx:id="textFieldLoginPassword" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
                 <Button onAction="#handleLogin" text="Login" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                <Button id="exitButton" fx:id="exitButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="EXIT"  onAction="#handleExit" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                <Button id="exitButton" fx:id="exitButton" mnemonicParsing="false" onAction="#handleExit" prefHeight="36.0" prefWidth="100.0" text="EXIT" GridPane.columnIndex="3" GridPane.rowIndex="8" />
             <columnConstraints>
                <ColumnConstraints />
                <ColumnConstraints />

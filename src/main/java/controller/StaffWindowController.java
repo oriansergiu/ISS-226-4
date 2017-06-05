@@ -7,4 +7,5 @@ import service.*;
  */
 public interface StaffWindowController {
     void handleChangeDeadline();
+    void handleAddSection();
 }

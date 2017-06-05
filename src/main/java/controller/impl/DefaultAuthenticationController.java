@@ -25,6 +25,8 @@ public class DefaultAuthenticationController implements AuthenticationController
     private AbstractService abstractService;
     private ConferenceSessionService conferenceSessionService;
     private ReviewerService reviewerService;
+    private SectionService sectionService;
+
 
     @FXML
     private RadioButton radioButtonRegisterUserRoleListener;
@@ -189,7 +191,7 @@ public class DefaultAuthenticationController implements AuthenticationController
     }
 
     @Override
-    public void setSectionService(SectionService sectionService) {
+    public void setSectionService(SectionService sectionService) {this.sectionService=sectionService;
 
     }
 
@@ -214,6 +216,7 @@ public class DefaultAuthenticationController implements AuthenticationController
         controller.setAbstractService(abstractService);
         controller.setConferenceSessionService(conferenceSessionService);
         controller.setReviewerService(reviewerService);
+        controller.setSectionService(sectionService);
     }
 
 

@@ -19,6 +19,9 @@ public class App extends Application {
     private UserRepository userRepository = new DefaultUserRepository();
     private UserService userService = new DefaultUserService();
 
+    private SectionRepository sectionRepository = new DefaultSectionRepository();
+    private SectionService sectionService = new DefaultSectionService();
+
     private PaperRepository paperRepository = new DefaultPaperRepository();
     private PaperService paperService = new DefaultPaperService();
 
@@ -44,6 +47,7 @@ public class App extends Application {
         authorService.setAuthorRepository(authorRepository);
         abstractService.setAbstractRepository(abstractRepository);
         reviewerService.setReviewerRepository(reviewerRepository);
+        sectionService.setSectionRepository(sectionRepository);
     }
 
     private void setServicesToControllers() {
@@ -53,6 +57,7 @@ public class App extends Application {
         authenticationController.setPaperService(paperService);
         authenticationController.setAbstractService(abstractService);
         authenticationController.setReviewerService(reviewerService);
+        authenticationController.setSectionService(sectionService);
     }
 
     private void loadAuthenticationView(Stage primaryStage) throws IOException {
