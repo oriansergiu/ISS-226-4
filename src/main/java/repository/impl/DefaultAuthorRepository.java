@@ -33,6 +33,15 @@ public class DefaultAuthorRepository implements AuthorRepository {
     }
 
     @Override
+    public void delete(Author author) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(author);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
     public Author getAuthorById(Integer id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
