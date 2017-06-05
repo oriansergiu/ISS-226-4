@@ -366,6 +366,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @FXML
     public void handleSelectionChanged(){
         Paper paper = proposedPapersTableView.getSelectionModel().getSelectedItem();
+        if(paper == null)
+            return;
         System.out.println(paper);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
         AnchorPane pane = null;
@@ -385,6 +387,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @FXML
     public void handleAcceptedSelectionChanged(){
         Paper paper = acceptedPapersTableView.getSelectionModel().getSelectedItem();
+        if(paper == null)
+            return;
         System.out.println(paper);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
         AnchorPane pane = null;
@@ -423,6 +427,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     }
 
     public void setModifyView(Paper paper){
+        if(paper == null)
+            return;
         TitleTF.setText(paper.getTitle());
         KeywordsTF.setText(paper.getKeywords());
         TopicsTF.setText(paper.getTopic());
