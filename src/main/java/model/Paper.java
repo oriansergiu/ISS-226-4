@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.List;
 
 @Entity
 @Table(name = "Paper")
@@ -25,6 +26,9 @@ public class Paper {
 
     @ManyToOne
     private Author author;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<PaperReview> reviews;
 
     public Integer getId() {
         return id;
@@ -89,4 +93,6 @@ public class Paper {
     public void setAuthor(Author author) {
         this.author = author;
     }
+
+
 }

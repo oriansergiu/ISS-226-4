@@ -1,5 +1,8 @@
 package model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,9 +17,9 @@ public class Reviewer {
     @JoinTable(name = "papers_to_review")
     private List<Paper> papersToReview;
 
-    @ManyToMany
-    @JoinTable(name = "abstracts_to_review")
-    private List<Abstract> abstractsToReview;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "papers_reviewed")
+    private List<Paper> papersReviewed;
 
     @OneToOne
     private User user;
@@ -37,19 +40,19 @@ public class Reviewer {
         this.papersToReview = papersToReview;
     }
 
-    public List<Abstract> getAbstractsToReview() {
-        return abstractsToReview;
-    }
-
-    public void setAbstractsToReview(List<Abstract> abstractsToReview) {
-        this.abstractsToReview = abstractsToReview;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Paper> getPapersReviewed() {
+        return papersReviewed;
+    }
+
+    public void setPapersReviewed(List<Paper> papersReviewed) {
+        this.papersReviewed = papersReviewed;
     }
 }

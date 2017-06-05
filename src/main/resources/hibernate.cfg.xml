@@ -24,5 +24,6 @@
         <mapping class="model.Conference"/>
         <mapping class="model.ConferenceSession"/>
         <mapping class="model.Abstract"/>
+        <mapping class="model.PaperReview"/>
     </session-factory>
 </hibernate-configuration>

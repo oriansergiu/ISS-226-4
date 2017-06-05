@@ -1,5 +1,6 @@
 package repository.impl;
 
+import model.PaperReview;
 import model.Reviewer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,8 +34,20 @@ public class DefaultReviewerRepository implements ReviewerRepository {
         session.beginTransaction();
         Reviewer reviewer = (Reviewer) session.createQuery("from Reviewer r where r.user.id=:id")
                 .setParameter("id", id).uniqueResult();
+        if (reviewer != null) {
+            reviewer.getPapersReviewed().size();
+        }
         session.getTransaction().commit();
         session.close();
         return reviewer;
+    }
+
+    @Override
+    public void reviewPaper(PaperReview paperReview) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.persist(paperReview);
+        session.getTransaction().commit();
+        session.close();
     }
 }

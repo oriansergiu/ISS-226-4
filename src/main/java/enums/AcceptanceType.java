@@ -1,0 +1,5 @@
+package enums;
+
+public enum AcceptanceType {
+    STRONG_REJECT, REJECT, WEAK_REJECT, BORDERLINE_PAPER, WEAK_ACCEPT, ACCEPT, STRONG_ACCEPT
+}
