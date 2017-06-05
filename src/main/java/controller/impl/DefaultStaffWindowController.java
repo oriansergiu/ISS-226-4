@@ -1,19 +1,24 @@
 package controller.impl;
 
+import com.mysql.cj.api.Session;
 import controller.Controller;
 import controller.StaffWindowController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import model.ConferenceSession;
-import model.User;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import model.*;
 import service.*;
 
 import java.io.IOException;
@@ -47,7 +52,13 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     TableView<ConferenceSession> sessionTableView;
 
     @FXML
+    TableView<Section> sectionTableView;
+
+    @FXML
     public TableColumn<ConferenceSession, Date> sessionsColumn;
+
+    @FXML
+    public TableColumn<Section, String> sectionsColumn;
 
     @FXML
     public AnchorPane centerPane;
@@ -58,8 +69,17 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     @FXML
     public TextField proposalDeadline;
 
+
     @FXML
-    private Button deadlineButton;
+    public TextField name;
+
+    @FXML
+    public TextField description;
+
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Button addSectionBtn;
 
     public DefaultStaffWindowController() {
     }
@@ -68,7 +88,10 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     public void initialize()
     {
         sessionsColumn.setCellValueFactory(new PropertyValueFactory<ConferenceSession,Date>("startDate"));
+        sectionsColumn.setCellValueFactory(new PropertyValueFactory<Section, String>("name"));
     }
+
+
 
     @Override
     public void setUserService(UserService userService) {
@@ -95,6 +118,7 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
         this.sectionService = sectionService;
     }
 
+
     @Override
     public void setPaperService(PaperService paperService) {
         this.paperService = paperService;
@@ -109,10 +133,15 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     public void setCurrentUser(User user) {
         this.user = user;
 
-        System.out.println(conferenceSessionService);
+        //System.out.println(conferenceSessionService);
         List<ConferenceSession> conferenceSessions = new ArrayList<>(conferenceSessionService.getAll());
             ObservableList<ConferenceSession> observableList = FXCollections.observableList(conferenceSessions);
             sessionTableView.setItems(observableList);
+
+        //System.out.println(sectionService);
+        List<Section> sections=new ArrayList<>((sectionService.getAll()));
+        ObservableList<Section> observableList1 = FXCollections.observableList(sections);
+        sectionTableView.setItems(observableList1);
     }
 
     @FXML
@@ -139,8 +168,10 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
         proposalDeadline.setText(String.valueOf(session.getProposalDeadline()));
     }
 
+
+
     @FXML
-    public void handleChangeDeadline() {
+   public void handleChangeDeadline() {
 
         String abstractDeadline = this.abstractDeadline.getText();
         String proposalDeadline = this.proposalDeadline.getText();
@@ -164,5 +195,82 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
         conferenceSessionService.updateConferenceSession(session);
         this.abstractDeadline.setText("");
         this.proposalDeadline.setText("");
+
    }
+    @FXML
+    public void handleAddSection() {
+
+
+        String name = this.name.getText();
+        String description = this.description.getText();
+
+
+        Section section = new Section();
+        section.setName(name);
+        section.setDescription(description);
+        section.setPapers(null);
+        section.setUser(user);
+
+
+        sectionService.addSection(section);
+        List<Section> sections=new ArrayList<>((sectionService.getAll()));
+        ObservableList<Section> observableList = FXCollections.observableList(sections);
+        sectionTableView.setItems(observableList);
+        this.name.setText("");
+        this.description.setText("");
+
+    }
+
+    @FXML
+    public void handleSelectionAdd(){
+        Section section = sectionTableView.getSelectionModel().getSelectedItem();
+        System.out.println(section);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/StaffView/AddSection.fxml"));
+        AnchorPane pane = null;
+        try {
+            fxmlLoader.setController(this);
+            pane = fxmlLoader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(pane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    @FXML
+    public void handleShowAddSectionBtn(){
+
+
+           // System.out.println("handle show add paper");
+          //  System.out.println(user);
+          //  System.out.println(authorService);
+         //   System.out.println(this);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/StaffView/AddSection.fxml"));
+
+            AnchorPane pane = null;
+            try {
+                fxmlLoader.setController(this);
+                pane = fxmlLoader.load();
+                centerPane.getChildren().clear();
+                centerPane.getChildren().add(pane);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+
+    public void setControllerServices(Controller controller){
+        controller.setAuthorService(authorService);
+        controller.setPaperService(paperService);
+        controller.setAbstractService(abstractService);
+        controller.setConferenceSessionService(conferenceSessionService);
+        controller.setReviewerService(reviewerService);
+        controller.setSectionService(sectionService);
+    }
 }

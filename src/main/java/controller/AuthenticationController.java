@@ -11,4 +11,5 @@ public interface AuthenticationController {
     void setPaperService(PaperService paperService);
     void setAbstractService(AbstractService abstractService);
     void setReviewerService(ReviewerService reviewerService);
+    void setSectionService(SectionService sectionService);
 }

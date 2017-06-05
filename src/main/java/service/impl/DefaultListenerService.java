@@ -1,9 +1,18 @@
 package service.impl;
 
+import repository.ListenerRepository;
 import service.ListenerService;
+import service.PaperService;
 
-/**
- * Created by Sergiu on 5/22/2017.
- */
+
 public class DefaultListenerService implements ListenerService {
+    @Override
+    public void setListenerRepository(ListenerRepository listenerRepository) {
+
+    }
+
+    @Override
+    public void setPaperService(PaperService paperService) {
+
+    }
 }

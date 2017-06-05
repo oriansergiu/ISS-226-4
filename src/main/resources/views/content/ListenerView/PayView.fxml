@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="submitButton" layoutX="320.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit Pay" />
+      <TextField fx:id="cardCodeText" layoutX="123.0" layoutY="241.0" promptText="Card Code" />
+      <RadioButton fx:id="visaRadioButton" layoutX="48.0" layoutY="208.0" mnemonicParsing="false" text="VISA" />
+      <RadioButton fx:id="mastercardRadioButton" layoutX="112.0" layoutY="208.0" mnemonicParsing="false" text="MasterCard" />
+      <RadioButton fx:id="maestroRadioButton" layoutX="223.0" layoutY="208.0" mnemonicParsing="false" text="Maestro" />
+      <Label layoutX="20.0" layoutY="241.0" prefHeight="31.0" prefWidth="95.0" text="Card Number">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="termsRadioButton" layoutX="48.0" layoutY="283.0" mnemonicParsing="false" text="Accept the terms and conditions." />
+      <Label layoutX="172.0" layoutY="14.0" text="Pay the tax">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cvvCodeText" layoutX="122.0" layoutY="158.0" promptText="CVV Code" />
+      <Label layoutX="39.0" layoutY="158.0" prefHeight="31.0" prefWidth="77.0" text="CVV Code">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="monthChoiceBox" layoutX="122.0" layoutY="108.0" prefHeight="31.0" prefWidth="137.0">
+      </ChoiceBox>
+      <Label layoutX="39.0" layoutY="108.0" prefHeight="31.0" prefWidth="77.0" text="Card date">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="yearChoiceBox" layoutX="274.0" layoutY="108.0" prefHeight="31.0" prefWidth="95.0" value="2017">
+      </ChoiceBox>
+      <Label layoutX="39.0" layoutY="63.0" prefHeight="31.0" prefWidth="77.0" text="Tax ">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="122.0" layoutY="63.0" prefHeight="31.0" prefWidth="77.0" text="100 RON">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
