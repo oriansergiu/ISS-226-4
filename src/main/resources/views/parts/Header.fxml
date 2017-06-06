@@ -11,7 +11,7 @@
     <columnConstraints>
         <ColumnConstraints percentWidth="50.0" />
     </columnConstraints>
-    <Label text="This is a test header, it will be changed." GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <Label text="CONFERENCE MANAGER" GridPane.columnIndex="0" GridPane.rowIndex="0">
       <GridPane.margin>
          <Insets bottom="10.0" />
       </GridPane.margin></Label>

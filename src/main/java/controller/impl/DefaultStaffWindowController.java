@@ -20,6 +20,7 @@ import service.*;
 import util.AlertUtil;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -294,6 +295,7 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
 
     @FXML
     public void handleSelectionChanged(){
+        centerPane.setVisible(true);
         ConferenceSession session = sessionTableView.getSelectionModel().getSelectedItem();
         System.out.println(session);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/StaffView/PustponeDeadline.fxml"));
@@ -312,8 +314,9 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     }
 
     public void setModifyView(ConferenceSession session){
-        abstractDeadline.setText(String.valueOf(session.getAbstractDeadline()));
-        proposalDeadline.setText(String.valueOf(session.getProposalDeadline()));
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        abstractDeadline.setText(dateFormat.format(session.getAbstractDeadline()));
+        proposalDeadline.setText(dateFormat.format(session.getProposalDeadline()));
     }
 
 
@@ -329,9 +332,10 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
 
         Date abs= null;
         Date prop=null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            abs = new SimpleDateFormat("yyyy-MM-dd").parse(abstractDeadline);
-            prop=new SimpleDateFormat("yyyy-MM-dd").parse(proposalDeadline);
+            abs = dateFormat.parse(abstractDeadline);
+            prop= dateFormat.parse(proposalDeadline);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -348,6 +352,7 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     @FXML
     public void handleAddSection() {
 
+        centerPane.setVisible(true);
 
         String name = this.name.getText();
         String description = this.description.getText();
@@ -441,8 +446,9 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     public List<Paper> getAllAcceptedPapers(){
         List<Author> authors=new ArrayList<>((authorService.getAll()));
         List<Paper> acceptedpapers=new ArrayList<>();
-        for (Author item : authors) {
-            acceptedpapers.add((Paper) item.getAcceptedPapers());
+
+        for (Author author : authors) {
+            acceptedpapers.addAll(author.getAcceptedPapers());
         }
         return acceptedpapers;
     }
@@ -461,6 +467,7 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     @FXML
     public void handleShowAddPaper(){
 
+        centerPane.setVisible(true);
         Section section = sectionTableView.getSelectionModel().getSelectedItem();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/StaffView/AddPaper.fxml"));
         AnchorPane pane = null;

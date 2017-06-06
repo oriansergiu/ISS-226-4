@@ -256,6 +256,7 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
 
     @FXML
     public void handleShowAddPaperBtn(){
+        centerPane.setVisible(true);
         if(user.getSession().getAbstractDeadline().compareTo(new Date()) <= 0)
         {
             AlertUtil.showAlertMessage(Alert.AlertType.WARNING, "The deadline for new papers passed");

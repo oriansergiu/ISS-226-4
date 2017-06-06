@@ -9,9 +9,8 @@
     <columnConstraints>
         <ColumnConstraints percentWidth="50.0"  />
     </columnConstraints>
-    <Label text="Createasfas" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <Label text="Created by: Orian Sergiu, Paros Raul, Pop Andrei, Pop Claudiu, Pop Cris" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
     <columnConstraints>
         <ColumnConstraints percentWidth="50.0"  />
     </columnConstraints>
-    <Label text="Version 0.0.1" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
 </GridPane>
