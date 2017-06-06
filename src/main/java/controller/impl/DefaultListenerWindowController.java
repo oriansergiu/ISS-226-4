@@ -155,8 +155,10 @@ public class DefaultListenerWindowController implements ListenerWindowController
             return;
         }
         else{
+
             String s = sectionsTable.getSelectionModel().getSelectedItem().getName();
             //save to db ++
+            AlertUtil.showAlertMessage(Alert.AlertType.CONFIRMATION,"Done!");
         }
     }
 
