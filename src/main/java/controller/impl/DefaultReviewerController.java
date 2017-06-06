@@ -6,9 +6,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.*;
 import org.hibernate.Hibernate;
 import service.*;
@@ -113,6 +116,9 @@ public class DefaultReviewerController implements Controller {
 
     @FXML
     public ListView<String> listViewReviewedPapersAllVotes;
+
+    @FXML
+    private Button logoutButton;
 
     ToggleGroup toggleGroupAcceptanceType;
 
@@ -269,16 +275,22 @@ public class DefaultReviewerController implements Controller {
             loadMainView("BidPapers");
 
             tableColumnBidPapersAllPapers.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
-            List<Paper> papers = paperService.getAll();
+            List<Paper> papers = new ArrayList<>();
+            List<Paper> papers2 = paperService.getAll();
             List<Paper> reviewerPapers = reviewer.getPapersToReview();
 
             if (reviewerPapers != null) {
-                for (int i = 0; i < papers.size(); i++) {
+                for (int i = 0; i < papers2.size(); i++) {
+                    boolean found = false;
                     for (Paper p : reviewerPapers) {
-                        if (p.getId().equals(papers.get(i).getId())) {
-                            papers.remove(i);
+                        if (p.getId().equals(papers2.get(i).getId())) {
+                            found = true;
                             break;
                         }
+                    }
+
+                    if (found == false) {
+                        papers.add(papers2.get(i));
                     }
                 }
             }
@@ -440,7 +452,7 @@ public class DefaultReviewerController implements Controller {
                         break;
                 }
 
-                String s = review.getReviewer().getUser().getFirstName() + " " + review.getReviewer().getUser().getFirstName() + ": " + qualifier;
+                String s = review.getReviewer().getUser().getFirstName() + " " + review.getReviewer().getUser().getLastName() + ": " + qualifier;
                 reviewsModel.add(s);
             }
 
@@ -466,5 +478,39 @@ public class DefaultReviewerController implements Controller {
         monthChoiceBox.setValue("Select");
         yearChoiceBox.getItems().setAll("2018","2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006");
         yearChoiceBox.setValue("2017");
+    }
+
+    @FXML
+    public void handleLogout() {
+
+
+        Stage primaryStage=new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/components/Authentication.fxml"));
+        BorderPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Controller controller = loader.getController();
+        setControllerServices(controller);
+        Scene scene = new Scene( pane );
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+
+    }
+
+    public void setControllerServices(Controller controller){
+        controller.setAuthorService(authorService);
+        controller.setPaperService(paperService);
+        controller.setAbstractService(abstractService);
+        controller.setConferenceSessionService(conferenceSessionService);
+        controller.setReviewerService(reviewerService);
+        controller.setSectionService(sectionService);
+        controller.setUserService(userService);
     }
 }

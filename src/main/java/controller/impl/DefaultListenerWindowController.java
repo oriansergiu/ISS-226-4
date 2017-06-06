@@ -9,10 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.*;
 import service.*;
 import util.AlertUtil;
@@ -66,6 +69,9 @@ public class DefaultListenerWindowController implements ListenerWindowController
 
     @FXML
     private RadioButton termsRadioButton;
+
+    @FXML
+    private Button logoutButton;
 
     @FXML
     public void initialize() {
@@ -201,5 +207,37 @@ public class DefaultListenerWindowController implements ListenerWindowController
        user.setRegistrationFee(true);
     }
 
+    @FXML
+    public void handleLogout() {
 
+
+        Stage primaryStage=new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/components/Authentication.fxml"));
+        BorderPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Controller controller = loader.getController();
+        setControllerServices(controller);
+        Scene scene = new Scene( pane );
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+
+    }
+
+    public void setControllerServices(Controller controller){
+        controller.setAuthorService(authorService);
+        controller.setPaperService(paperService);
+        controller.setAbstractService(abstractService);
+        controller.setConferenceSessionService(conferenceSessionService);
+        controller.setReviewerService(reviewerService);
+        controller.setSectionService(sectionService);
+        controller.setUserService(userService);
+    }
 }

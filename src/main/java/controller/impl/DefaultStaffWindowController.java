@@ -55,6 +55,12 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     TableView<Section> sectionTableView;
 
     @FXML
+    TableView<Section> tableViewSectionPapers;
+
+    @FXML
+    TableView<Paper> tableViewAllPapers;
+
+    @FXML
     public TableColumn<ConferenceSession, Date> sessionsColumn;
 
     @FXML
@@ -133,10 +139,9 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
     public void setCurrentUser(User user) {
         this.user = user;
 
-        //System.out.println(conferenceSessionService);
         List<ConferenceSession> conferenceSessions = new ArrayList<>(conferenceSessionService.getAll());
-            ObservableList<ConferenceSession> observableList = FXCollections.observableList(conferenceSessions);
-            sessionTableView.setItems(observableList);
+        ObservableList<ConferenceSession> observableList = FXCollections.observableList(conferenceSessions);
+        sessionTableView.setItems(observableList);
 
         //System.out.println(sectionService);
         List<Section> sections=new ArrayList<>((sectionService.getAll()));
@@ -232,7 +237,6 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
             pane = fxmlLoader.load();
             centerPane.getChildren().clear();
             centerPane.getChildren().add(pane);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -240,17 +244,44 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
 
     }
 
+    @FXML
+    public void handleLogout() {
+
+
+        Stage primaryStage=new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/components/Authentication.fxml"));
+        BorderPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Controller controller = loader.getController();
+        setControllerServices(controller);
+        Scene scene = new Scene( pane );
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+
+    }
+
+    public void setControllerServices(Controller controller){
+        controller.setAuthorService(authorService);
+        controller.setPaperService(paperService);
+        controller.setAbstractService(abstractService);
+        controller.setConferenceSessionService(conferenceSessionService);
+        controller.setReviewerService(reviewerService);
+        controller.setSectionService(sectionService);
+        controller.setUserService(userService);
+    }
 
     @FXML
     public void handleShowAddSectionBtn(){
 
-
-           // System.out.println("handle show add paper");
-          //  System.out.println(user);
-          //  System.out.println(authorService);
-         //   System.out.println(this);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/StaffView/AddSection.fxml"));
-
             AnchorPane pane = null;
             try {
                 fxmlLoader.setController(this);
@@ -261,6 +292,45 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+    }
+
+    public List<Paper> getAllAcceptedPapers(){
+        List<Author> authors=new ArrayList<>((authorService.getAll()));
+        List<Paper> acceptedpapers=new ArrayList<>();
+        for (Author item : authors) {
+            acceptedpapers.add((Paper) item.getAcceptedPapers());
+        }
+        return acceptedpapers;
+    }
+
+    public List<Paper> getSectionPapers(){
+//        Section section=
+//        List<Paper> sectionpapers=new ArrayList<>();
+//        for (Paper item : allpapers) {
+//            if(item.get)
+//            sectionpapers.add(item);
+//        }
+//        return acceptedpapers;
+        return null;
+}
+
+    @FXML
+    public void handleShowAddPaper(){
+
+        Section section = sectionTableView.getSelectionModel().getSelectedItem();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/StaffView/AddPaper.fxml"));
+        AnchorPane pane = null;
+        try {
+            fxmlLoader.setController(this);
+            pane = fxmlLoader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(pane);
+            ObservableList<Paper> observableList = FXCollections.observableList(getAllAcceptedPapers());
+            tableViewAllPapers.setItems(observableList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

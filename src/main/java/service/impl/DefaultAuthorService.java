@@ -6,6 +6,8 @@ import repository.AuthorRepository;
 import service.AuthorService;
 import service.PaperService;
 
+import java.util.List;
+
 public class DefaultAuthorService implements AuthorService {
     private AuthorRepository authorRepository;
     private PaperService paperService;
@@ -35,4 +37,6 @@ public class DefaultAuthorService implements AuthorService {
         authorRepository.update(author);
     }
 
+    @Override
+    public List<Author> getAll(){return authorRepository.getAll();}
 }
