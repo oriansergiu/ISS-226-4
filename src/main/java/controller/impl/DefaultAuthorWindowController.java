@@ -16,10 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Abstract;
-import model.Author;
-import model.Paper;
-import model.User;
+import model.*;
 import service.*;
 import util.AlertUtil;
 
@@ -117,6 +114,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @FXML
     public void initialize()
     {
+        colSection.setCellValueFactory(new PropertyValueFactory<Section,String>("name"));
+
         proposedColumn.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
         acceptedColumn.setCellValueFactory(new PropertyValueFactory<Paper, String>("title"));
 
@@ -167,6 +166,11 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @Override
     public void setCurrentUser(User user) {
         this.user = user;
+
+        List<Section> sections=new ArrayList<>((sectionService.getAll()));
+        //System.out.println("seize" + sections.size());
+        ObservableList<Section> observableList1 = FXCollections.observableList(sections);
+        sectionsTable.setItems(observableList1);
 
         this.author = authorService.getAuthorByUserId(user);
 
@@ -247,6 +251,7 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
 
     @FXML
     public void handleProposedPapersClicked() {
+        restorePay();
     }
 
     @FXML
@@ -277,6 +282,7 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     }
 
     public void handlePay(){
+        centerPane.setVisible(true);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/ListenerView/PayView.fxml"));
 
         AnchorPane pane = null;
@@ -344,6 +350,32 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
 
     }
 
+    @FXML
+    private TableView<Section> sectionsTable;
+
+    @FXML
+    private TableColumn<Section,String> colSection;
+
+
+
+    public void handleRegister(){
+        if(sectionsTable.getSelectionModel().getSelectedItem()==null){
+            AlertUtil.showAlertMessage(Alert.AlertType.ERROR,"Please select a section!");
+            return;
+        }
+        else{
+
+            String s = sectionsTable.getSelectionModel().getSelectedItem().getName();
+            //save to db ++
+            AlertUtil.showAlertMessage(Alert.AlertType.CONFIRMATION,"Done!");
+        }
+    }
+    public void restorePay(){
+
+        centerPane.setVisible(true);
+        centerPane.setVisible(false);
+    }
+
     private void restore() {
         cardCodeText.setText("");
         cvvCodeText.setText("");
@@ -357,12 +389,23 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         if(verifyPay() == 1){
             return;
         }
+
         user.setRegistrationFee(true);
+        userService.update(user);
+        centerPane.setVisible(false);
+
+//        if(userService == null)
+//            System.out.println("null");
+//        else
+//            System.out.println("not null");
+//        //userService.update(user);
     }
 
     @FXML
     public void handleSelectionChanged(){
         Paper paper = proposedPapersTableView.getSelectionModel().getSelectedItem();
+        if(paper == null)
+            return;
         System.out.println(paper);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
         AnchorPane pane = null;
@@ -382,6 +425,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     @FXML
     public void handleAcceptedSelectionChanged(){
         Paper paper = acceptedPapersTableView.getSelectionModel().getSelectedItem();
+        if(paper == null)
+            return;
         System.out.println(paper);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/AuthorView/AddPaper.fxml"));
         AnchorPane pane = null;
@@ -420,6 +465,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     }
 
     public void setModifyView(Paper paper){
+        if(paper == null)
+            return;
         TitleTF.setText(paper.getTitle());
         KeywordsTF.setText(paper.getKeywords());
         TopicsTF.setText(paper.getTopic());

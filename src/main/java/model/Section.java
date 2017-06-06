@@ -21,10 +21,10 @@ public class Section {
     @JoinTable(name = "sections_participants")
     private List<User> participants;
 
-    @ManyToMany
-    @JoinTable(name = "section_papers")
-    private List<Paper> papers;
 
+    @ManyToMany
+    @JoinTable(name = "section_paper")
+    private List<Paper> papers;
     public Integer getId() {
         return id;
     }
@@ -48,6 +48,7 @@ public class Section {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public List<Paper> getPapers() {
         return papers;

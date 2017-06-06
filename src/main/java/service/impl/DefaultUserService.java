@@ -25,7 +25,7 @@ public class DefaultUserService implements UserService {
 
     @Transactional
     public void update(User user) {
-
+        userRepository.update(user);
     }
 
     @Transactional

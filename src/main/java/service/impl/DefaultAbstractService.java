@@ -23,4 +23,9 @@ public class DefaultAbstractService implements AbstractService{
     public void updateAbstract(Abstract _abstract) {
         abstractRepository.update(_abstract);
     }
+
+    @Override
+    public void delete(Abstract _abstract) {
+        abstractRepository.delete(_abstract);
+    }
 }

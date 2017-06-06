@@ -31,6 +31,15 @@ public class DefaultAbstractRepository implements AbstractRepository {
     }
 
     @Override
+    public void delete(Abstract _abstract) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(_abstract);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
     public Abstract getAbstractById(Integer id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
