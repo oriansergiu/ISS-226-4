@@ -9,6 +9,7 @@ public class Abstract {
     @GeneratedValue
     private Integer id;
 
+    @Column(length = 2000)
     private String text;
 
     public Paper getPaper() {

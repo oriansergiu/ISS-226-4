@@ -104,6 +104,8 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
     public TableView<Paper> acceptedPapersTableView;
     @FXML
     public TableColumn<Paper,String> acceptedColumn;
+    @FXML
+    private Button logoutButton;
 
 
     public DefaultAuthorWindowController() {
@@ -424,11 +426,6 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
 //        //userService.update(user);
     }
 
-    public void setControllerServices(Controller controller){
-        controller.setAuthorService(authorService);
-        controller.setPaperService(paperService);
-    }
-
     @FXML
     public void handleSelectionChanged(){
         Paper paper = proposedPapersTableView.getSelectionModel().getSelectedItem();
@@ -556,7 +553,37 @@ public class DefaultAuthorWindowController implements AuthorWindowController, Co
         abstractService.updateAbstract(_abstract);
     }
 
-    public void logoutHandle() {
+    @FXML
+    public void handleLogout() {
 
+
+        Stage primaryStage=new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/components/Authentication.fxml"));
+        BorderPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Controller controller = loader.getController();
+        setControllerServices(controller);
+        Scene scene = new Scene( pane );
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+
+    }
+
+    public void setControllerServices(Controller controller){
+        controller.setAuthorService(authorService);
+        controller.setPaperService(paperService);
+        controller.setAbstractService(abstractService);
+        controller.setConferenceSessionService(conferenceSessionService);
+        controller.setReviewerService(reviewerService);
+        controller.setSectionService(sectionService);
+        controller.setUserService(userService);
     }
 }

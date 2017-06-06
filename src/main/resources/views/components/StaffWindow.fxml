@@ -37,7 +37,7 @@
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
                            <Button fx:id="addSectionBtn" layoutX="60.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleShowAddSectionBtn" text="Add Section" />
-                            <TableView fx:id="sectionTableView" layoutX="3.0" layoutY="49.0" onMouseClicked="#handleSelectionChanged" prefHeight="121.0" prefWidth="195.0">
+                            <TableView fx:id="sectionTableView" layoutX="3.0" layoutY="49.0" onMouseClicked="#handleShowAddPaper" prefHeight="121.0" prefWidth="195.0">
                                 <columns>
                                     <TableColumn fx:id="sectionsColumn" prefWidth="193.0" text="Name" />
                                 </columns>
@@ -70,7 +70,7 @@
             <VBox>
                 <ListView prefHeight="400.0" prefWidth="248.0" />
             </VBox>
-         <Button fx:id="logoutButton" layoutX="168.0" layoutY="601.0" mnemonicParsing="false" text="Logout" />
+         <Button fx:id="logoutButton" onAction="#handleLogout" layoutX="168.0" layoutY="601.0" mnemonicParsing="false" text="Logout" />
          <BorderPane.margin>
             <Insets left="10.0" />
          </BorderPane.margin>
