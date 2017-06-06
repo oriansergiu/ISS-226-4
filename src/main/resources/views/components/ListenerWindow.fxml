@@ -29,7 +29,7 @@
                                     </children></AnchorPane>
                             </content>
                         </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="Register to Section">
+                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" onMouseClicked="#restorePay" text="Register to Section">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="547.0" prefWidth="210.0">
                            <children>
