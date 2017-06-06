@@ -245,6 +245,29 @@ public class DefaultReviewerController implements Controller {
             error = 1;
             msg += "Please enter the cvv code\n";
         }
+        Integer errorCvv = 0;
+        for(int i=0;i<cvv.length();i++){
+            if(!("0123456789".contains(cvv.substring(i,i+1)))){
+
+                errorCvv=1;
+            }
+
+        }
+        if(errorCvv == 1){
+            error = 1;
+            msg += "CVV must be only digits not letters \n";
+        }
+        Integer errorCode=0;
+        for(int i=0;i<code.length();i++){
+            if(!("0123456789".contains(code.substring(i,i+1)))){
+                errorCode = 1;
+            }
+
+        }
+        if(errorCode == 1){
+            msg += "Code must be only digits not letters \n";
+            error= 1;
+        }
 
         if(Objects.equals(code, "")){
             error = 1;
@@ -256,6 +279,7 @@ public class DefaultReviewerController implements Controller {
             msg+= "You must accept the terms to continue\n";
         }
 
+
         if(toggleGroupCardType.getSelectedToggle() == null){
             msg+="You must select the card type\n";
             error = 1;
@@ -263,8 +287,10 @@ public class DefaultReviewerController implements Controller {
         if(error==1){
             AlertUtil.showAlertMessage(Alert.AlertType.ERROR,msg);
         }
-        else
+        else{
+            AlertUtil.showAlertMessage(Alert.AlertType.CONFIRMATION,"Done!");
             restore();
+        }
 
         return error;
 
@@ -292,6 +318,7 @@ public class DefaultReviewerController implements Controller {
 
     @FXML
     public void handleShowBinPapersView() {
+        centerPane.setVisible(true);
         if (user.getSession().getAbstractDeadline().compareTo(new Date()) >= 0) {
             loadMainView("DateError");
             labelReviewerDateError.setText("The bid period hasn't started yet, please come back after " + user.getSession().getAbstractDeadline().toString());
@@ -355,6 +382,7 @@ public class DefaultReviewerController implements Controller {
 
     @FXML
     public void handleShowReviewPapersView() {
+        centerPane.setVisible(true);
         loadMainView("ReviewPapers");
         toggleGroupAcceptanceType = new ToggleGroup();
         radioButtonReviewPaperStrongReject.setToggleGroup(toggleGroupAcceptanceType);

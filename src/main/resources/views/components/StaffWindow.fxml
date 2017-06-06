@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="700" prefWidth="1000" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultStaffWindowController">
+<BorderPane prefHeight="700" prefWidth="1000" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultStaffWindowController">
     <top>
         <fx:include source="../parts/Header.fxml" />
     </top>
@@ -19,7 +19,7 @@
         <AnchorPane>
          <Accordion>
            <panes>
-             <TitledPane animated="false" text="Conference Sessions">
+             <TitledPane animated="false" onMouseClicked="#restorePay" text="Conference Sessions">
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                    <children>
@@ -32,7 +32,7 @@
                  </AnchorPane>
                </content>
              </TitledPane>
-             <TitledPane animated="false" text="Conference Sections">
+             <TitledPane animated="false" onMouseClicked="#restorePay" text="Conference Sections">
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
@@ -46,9 +46,12 @@
                  </AnchorPane>
                </content>
              </TitledPane>
-             <TitledPane animated="false" text="untitled 3">
+             <TitledPane animated="false" text="Pay Section">
                <content>
-                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                           <Button layoutX="53.0" layoutY="23.0" mnemonicParsing="false" onAction="#handlePay" text="Pay the fee" />
+                        </children></AnchorPane>
                </content>
              </TitledPane>
            </panes>
