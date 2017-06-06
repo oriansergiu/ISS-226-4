@@ -140,6 +140,7 @@ public class DefaultStaffWindowController implements StaffWindowController, Cont
 
         //System.out.println(sectionService);
         List<Section> sections=new ArrayList<>((sectionService.getAll()));
+
         ObservableList<Section> observableList1 = FXCollections.observableList(sections);
         sectionTableView.setItems(observableList1);
     }

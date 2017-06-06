@@ -44,6 +44,12 @@ public class DefaultListenerWindowController implements ListenerWindowController
     private ToggleGroup toggleGroupCardType  = new ToggleGroup();
 
     @FXML
+    private TableView<Section> sectionsTable;
+
+    @FXML
+    private TableColumn<Section,String> colSection;
+
+    @FXML
     private AnchorPane centerPane;
 
     @FXML
@@ -69,6 +75,7 @@ public class DefaultListenerWindowController implements ListenerWindowController
 
     @FXML
     public void initialize() {
+        colSection.setCellValueFactory(new PropertyValueFactory<Section,String>("name"));
         toggleGroupCardType = new ToggleGroup();
         maestroRadioButton.setToggleGroup(toggleGroupCardType);
         mastercardRadioButton.setToggleGroup(toggleGroupCardType);
@@ -113,7 +120,12 @@ public class DefaultListenerWindowController implements ListenerWindowController
 
     @Override
     public void setCurrentUser(User user) {
+
         this.user = user;
+        List<Section> sections=new ArrayList<>((sectionService.getAll()));
+        //System.out.println("seize" + sections.size());
+        ObservableList<Section> observableList1 = FXCollections.observableList(sections);
+        sectionsTable.setItems(observableList1);
     }
 
     public void handlePay(){
@@ -134,6 +146,18 @@ public class DefaultListenerWindowController implements ListenerWindowController
         monthChoiceBox.setValue("Select");
         yearChoiceBox.getItems().setAll("2018","2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006");
         yearChoiceBox.setValue("2017");
+
+
+    }
+    public void handleRegister(){
+        if(sectionsTable.getSelectionModel().getSelectedItem()==null){
+            AlertUtil.showAlertMessage(Alert.AlertType.ERROR,"Please select a section!");
+            return;
+        }
+        else{
+            String s = sectionsTable.getSelectionModel().getSelectedItem().getName();
+            //save to db ++
+        }
     }
 
 

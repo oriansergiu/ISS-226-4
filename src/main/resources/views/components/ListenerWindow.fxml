@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -27,9 +29,17 @@
                                     </children></AnchorPane>
                             </content>
                         </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="Register to Session">
+                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="Register to Section">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="547.0" prefWidth="210.0">
+                           <children>
+                              <Button layoutX="73.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRegister" text="Register" />
+                              <TableView fx:id="sectionsTable" layoutX="42.0" layoutY="70.0" prefHeight="158.0" prefWidth="137.0">
+                                <columns>
+                                  <TableColumn fx:id="colSection" prefWidth="136.0" text="Sections" />
+                                </columns>
+                              </TableView>
+                           </children></AnchorPane>
                      </content>
                   </TitledPane>
                     </panes>
