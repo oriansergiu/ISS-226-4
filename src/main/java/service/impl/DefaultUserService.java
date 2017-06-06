@@ -69,4 +69,8 @@ public class DefaultUserService implements UserService {
 
         return user;
     }
+    @Transactional
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
 }

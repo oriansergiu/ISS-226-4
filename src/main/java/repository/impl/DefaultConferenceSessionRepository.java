@@ -51,4 +51,13 @@ public class DefaultConferenceSessionRepository implements ConferenceSessionRepo
         return list;
     }
 
+    @Override
+    public void delete(ConferenceSession conferenceSession) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(conferenceSession);
+        session.getTransaction().commit();
+        session.close();
+    }
+
 }

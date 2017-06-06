@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import repository.ReviewerRepository;
 import util.HibernateUtil;
 
+import java.util.List;
+
 public class DefaultReviewerRepository implements ReviewerRepository {
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
@@ -47,6 +49,26 @@ public class DefaultReviewerRepository implements ReviewerRepository {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.persist(paperReview);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public List<Reviewer> getAll() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Reviewer> list = session.createQuery("from Reviewer").list();
+        session.getTransaction().commit();
+        session.close();
+
+        return list;
+    }
+
+    @Override
+    public void delete(Reviewer reviewer) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(reviewer);
         session.getTransaction().commit();
         session.close();
     }

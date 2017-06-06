@@ -11,4 +11,6 @@ public interface PaperRepository {
     Paper getPaperById(Integer id);
     List<Paper> getAll();
     List<PaperReview> getReviewsByPaperId(Integer id);
+
+    void delete(Paper paper);
 }

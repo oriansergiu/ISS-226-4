@@ -10,4 +10,5 @@ public interface UserRepository {
     User getUserById(Integer id);
     User getUserByEmail(String email);
     List<User> getAll();
+    void delete(User user);
 }

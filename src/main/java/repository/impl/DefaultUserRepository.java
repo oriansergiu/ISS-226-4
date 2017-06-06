@@ -56,4 +56,13 @@ public class DefaultUserRepository implements UserRepository {
 
         return list;
     }
+
+    @Override
+    public void delete(User user) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(user);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

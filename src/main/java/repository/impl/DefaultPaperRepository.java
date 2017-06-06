@@ -70,4 +70,13 @@ public class DefaultPaperRepository implements PaperRepository {
 
         return paper.getReviews();
     }
+
+    @Override
+    public void delete(Paper paper) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(paper);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

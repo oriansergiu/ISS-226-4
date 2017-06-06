@@ -4,11 +4,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Paper;
 import repository.*;
 import repository.impl.*;
 import service.*;
 import service.impl.*;
+import test.TestRepository.*;
+import test.TestServices.TestUserService;
 
 import java.io.IOException;
 
@@ -76,6 +77,10 @@ public class App extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
+        //TESTS
+        tests();
+        System.out.println("TESTS PASSED");
+
         //Firstly load the controllers from the fxml files
         loadAuthenticationView(primaryStage);
 
@@ -84,6 +89,29 @@ public class App extends Application {
 
         //Then set services to controllers
         setServicesToControllers();
+    }
+
+    public void tests()
+    {
+        TestUserService testUserService = new TestUserService();
+        TestAbstractRepository abstractRepository = new TestAbstractRepository();
+        TestAuthorRepository authorRepository = new TestAuthorRepository();
+        TestConferenceRepository conferenceRepository = new TestConferenceRepository();
+        TestConferenceSessionRepository conferenceSessionRepository = new TestConferenceSessionRepository();
+        TestPaperRepository paperRepository = new TestPaperRepository();
+        TestReviewerRepository reviewerRepository = new TestReviewerRepository();
+        TestSectionRepository sectionRepository = new TestSectionRepository();
+        TestUserRepository userRepository = new TestUserRepository();
+
+        testUserService.tests();
+        abstractRepository.Test();
+        authorRepository.Test();
+        conferenceRepository.Test();
+        conferenceSessionRepository.Test();
+        paperRepository.Test();
+        reviewerRepository.Test();
+        sectionRepository.Test();
+        userRepository.Test();
     }
 
 }
