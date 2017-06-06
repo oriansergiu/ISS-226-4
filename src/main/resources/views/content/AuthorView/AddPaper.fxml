@@ -6,21 +6,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="addPaperBtn" layoutX="383.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleAddPaper" text="Add Paper" />
-      <TextField fx:id="TitleTF" layoutX="100.0" layoutY="14.0" />
-      <Label layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="82.0" text="Proposal name" />
-      <Label layoutX="37.0" layoutY="54.0" text="Keywords" />
-      <Label layoutX="25.0" layoutY="125.0" text="Co Authors" />
-      <Label layoutX="55.0" layoutY="88.0" text="Topics" />
+      <TextField fx:id="TitleTF" layoutX="152.0" layoutY="14.0" />
+      <Label layoutX="43.0" layoutY="18.0" prefHeight="21.0" prefWidth="111.0" text="Proposal name" />
+      <Label layoutX="66.0" layoutY="54.0" text="Keywords" />
+      <Label layoutX="54.0" layoutY="125.0" text="Co Authors" />
+      <Label layoutX="84.0" layoutY="88.0" text="Topics" />
       <Label layoutX="41.0" layoutY="156.0" text="Abstract" />
-      <TextField fx:id="KeywordsTF" layoutX="100.0" layoutY="50.0" />
-      <TextField fx:id="TopicsTF" layoutX="100.0" layoutY="84.0" />
-      <TextField fx:id="coAuthorsTF" layoutX="100.0" layoutY="121.0" />
-      <TextArea fx:id="abstractTA" layoutX="99.0" layoutY="156.0" prefHeight="162.0" prefWidth="321.0" />
-      <Label layoutX="55.0" layoutY="332.0" prefHeight="17.0" prefWidth="34.0" text="Paper" />
-      <Button fx:id="uploadPaperBtn" layoutX="100.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleUploadPaper" text="Upload Paper" />
-      <TextField fx:id="filePathTF" editable="false" layoutX="189.0" layoutY="328.0" prefHeight="25.0" prefWidth="230.0" />
+      <TextField fx:id="KeywordsTF" layoutX="152.0" layoutY="50.0" />
+      <TextField fx:id="TopicsTF" layoutX="152.0" layoutY="84.0" />
+      <TextField fx:id="coAuthorsTF" layoutX="152.0" layoutY="121.0" />
+      <TextArea fx:id="abstractTA" layoutX="109.0" layoutY="156.0" prefHeight="162.0" prefWidth="321.0" />
+      <Label layoutX="50.0" layoutY="332.0" prefHeight="21.0" prefWidth="55.0" text="Paper" />
+      <Button fx:id="uploadPaperBtn" layoutX="112.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleUploadPaper" text="Upload Paper" />
+      <TextField fx:id="filePathTF" editable="false" layoutX="234.0" layoutY="327.0" prefHeight="25.0" prefWidth="230.0" />
    </children>
 </AnchorPane>

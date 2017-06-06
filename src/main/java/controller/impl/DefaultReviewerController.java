@@ -124,6 +124,9 @@ public class DefaultReviewerController implements Controller {
 
     @FXML
     public void initialize() {
+
+        colSection.setCellValueFactory(new PropertyValueFactory<Section,String>("name"));
+
         toggleGroupCardType = new ToggleGroup();
         maestroRadioButton.setToggleGroup(toggleGroupCardType);
         mastercardRadioButton.setToggleGroup(toggleGroupCardType);
@@ -165,9 +168,34 @@ public class DefaultReviewerController implements Controller {
         this.abstractService = abstractService;
     }
 
+    @FXML
+    private TableView<Section> sectionsTable;
+
+    @FXML
+    private TableColumn<Section,String> colSection;
+
+
+    public void handleRegister(){
+        if(sectionsTable.getSelectionModel().getSelectedItem()==null){
+            AlertUtil.showAlertMessage(Alert.AlertType.ERROR,"Please select a section!");
+            return;
+        }
+        else{
+
+            String s = sectionsTable.getSelectionModel().getSelectedItem().getName();
+            //save to db ++
+            AlertUtil.showAlertMessage(Alert.AlertType.CONFIRMATION,"Done!");
+        }
+    }
+
     @Override
     public void setCurrentUser(User user) {
         this.user = user;
+
+        List<Section> sections=new ArrayList<>((sectionService.getAll()));
+        //System.out.println("seize" + sections.size());
+        ObservableList<Section> observableList1 = FXCollections.observableList(sections);
+        sectionsTable.setItems(observableList1);
 
         Reviewer reviewer = reviewerService.getReviewerByUser(user);
 
@@ -241,7 +269,10 @@ public class DefaultReviewerController implements Controller {
         return error;
 
     }
+    public void restorePay(){
 
+        centerPane.setVisible(false);
+    }
     private void restore() {
         cardCodeText.setText("");
         cvvCodeText.setText("");
@@ -449,6 +480,7 @@ public class DefaultReviewerController implements Controller {
     }
 
     public void handlePay(){
+        centerPane.setVisible(true);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/content/ListenerView/PayView.fxml"));
 
         AnchorPane pane = null;

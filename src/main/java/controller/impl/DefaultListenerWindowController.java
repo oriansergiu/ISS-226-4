@@ -129,6 +129,8 @@ public class DefaultListenerWindowController implements ListenerWindowController
     }
 
     public void restorePay(){
+
+        centerPane.setVisible(true);
         centerPane.setVisible(false);
     }
     public void handlePay(){

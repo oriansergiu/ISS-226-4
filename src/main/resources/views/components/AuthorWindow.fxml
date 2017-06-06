@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="479.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthorWindowController">
+<BorderPane prefHeight="479.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthorWindowController">
     <top>
         <fx:include source="../parts/Header.fxml" />
     </top>
@@ -32,7 +32,7 @@
                         </children></AnchorPane>
                </content>
              </TitledPane>
-             <TitledPane animated="false" text="Accepted papers">
+             <TitledPane animated="false" onMouseClicked="#restorePay" text="Accepted papers">
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
@@ -52,6 +52,19 @@
                         </children></AnchorPane>
                </content>
              </TitledPane>
+               <TitledPane animated="false" layoutX="10.0" layoutY="72.0" onMouseClicked="#restorePay" text="Register to Section">
+                  <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="528.0" prefWidth="210.0">
+                        <children>
+                           <Button layoutX="59.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRegister" text="Register" />
+                           <TableView fx:id="sectionsTable" layoutX="29.0" layoutY="55.0" prefHeight="145.0" prefWidth="135.0">
+                             <columns>
+                               <TableColumn fx:id="colSection" prefWidth="134.0" text="Sections" />
+                             </columns>
+                           </TableView>
+                        </children></AnchorPane>
+                  </content>
+               </TitledPane>
            </panes>
          </Accordion>
         </AnchorPane>
