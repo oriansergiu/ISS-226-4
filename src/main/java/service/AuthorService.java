@@ -1,6 +1,7 @@
 package service;
 
 import model.Author;
+import model.Paper;
 import model.User;
 import repository.AuthorRepository;
 

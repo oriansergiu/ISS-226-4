@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="479.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthorWindowController">
+<BorderPane prefHeight="479.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.impl.DefaultAuthorWindowController">
     <top>
         <fx:include source="../parts/Header.fxml" />
     </top>
@@ -19,20 +19,20 @@
         <AnchorPane>
          <Accordion>
            <panes>
-             <TitledPane fx:id="proposedPapersTP" animated="false" onMouseClicked="#handleProposedPapersClicked" text="Lucrari propuse">
+             <TitledPane fx:id="proposedPapersTP" animated="false" onMouseClicked="#handleProposedPapersClicked" text="Proposed papers">
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                           <Button fx:id="showAddPaperBtn" layoutX="51.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleShowAddPaperBtn" text="Adauga Lucrare" />
+                           <Button fx:id="showAddPaperBtn" layoutX="51.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleShowAddPaperBtn" text="Add paper" />
                            <TableView fx:id="proposedPapersTableView" layoutX="9.0" layoutY="27.0" onMouseClicked="#handleSelectionChanged" prefHeight="152.0" prefWidth="183.0">
                              <columns>
-                               <TableColumn fx:id="proposedColumn" prefWidth="182.0" text="Lucrari propuse" />
+                               <TableColumn fx:id="proposedColumn" prefWidth="182.0" text="Proposed papers" />
                              </columns>
                            </TableView>
                         </children></AnchorPane>
                </content>
              </TitledPane>
-             <TitledPane animated="false" text="Lucrari acceptate">
+             <TitledPane animated="false" text="Accepted papers">
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>

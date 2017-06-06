@@ -1,6 +1,7 @@
 package service.impl;
 
 import model.Author;
+import model.Paper;
 import model.User;
 import repository.AuthorRepository;
 import service.AuthorService;
@@ -34,5 +35,6 @@ public class DefaultAuthorService implements AuthorService {
     public void updateAuthor(Author author) {
         authorRepository.update(author);
     }
+
 
 }
