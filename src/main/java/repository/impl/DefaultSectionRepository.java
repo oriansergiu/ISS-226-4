@@ -52,4 +52,13 @@ public class DefaultSectionRepository implements SectionRepository {
 
         return list;
     }
+
+    @Override
+    public void delete(Section section) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(section);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

@@ -9,4 +9,6 @@ public interface ConferenceSessionRepository {
     void update(ConferenceSession conferenceSession);
     ConferenceSession findById(Integer id);
     List<ConferenceSession> getAll();
+
+    void delete(ConferenceSession conferenceSession);
 }

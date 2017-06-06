@@ -6,9 +6,6 @@ import validator.exceptions.UserException;
 
 import java.util.List;
 
-/**
- * Created by raulp on 5/20/2017.
- */
 public interface UserService {
     void save(User user) throws UserException;
     void update(User user);
@@ -18,4 +15,5 @@ public interface UserService {
     List<User> getAll();
     void setUserRepository(UserRepository userRepository);
     User loginUser(String email, String password) throws UserException;
+    void delete(User user);
 }
